@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
+import { MatchListItemSkeleton } from '../components/Skeleton'
 
 export default function Matches() {
   const { user } = useAuth()
@@ -55,7 +56,11 @@ export default function Matches() {
       </h1>
 
       {loading ? (
-        <p className="text-sm font-semibold text-slate-400">Cargando…</p>
+        <div className="flex flex-col gap-2">
+          <MatchListItemSkeleton />
+          <MatchListItemSkeleton />
+          <MatchListItemSkeleton />
+        </div>
       ) : matches.length === 0 ? (
         <div className="mt-16 text-center">
           <p className="text-5xl">💬</p>

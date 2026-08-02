@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Logo from '../components/Logo'
 
 export default function Register() {
   const { signUp } = useAuth()
@@ -42,8 +43,8 @@ export default function Register() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-gradient-to-br from-energy-green via-electric to-energy-orange px-6 py-10">
       <div className="w-full max-w-sm rounded-3xl bg-white p-8 shadow-2xl dark:bg-slate-900">
-        <div className="mb-8 text-center">
-          <div className="mb-3 text-5xl">🤝</div>
+        <div className="mb-8 flex flex-col items-center text-center">
+          <Logo size={64} className="mb-3" />
           <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Crea tu cuenta</h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Únete y encuentra con quién jugar</p>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
+import { ChatSkeleton } from '../components/Skeleton'
 
 export default function Chat() {
   const { matchId } = useParams()
@@ -109,7 +110,7 @@ export default function Chat() {
 
       <div className="no-scrollbar flex-1 overflow-y-auto px-4 py-4">
         {loading ? (
-          <p className="text-center text-sm font-semibold text-slate-400">Cargando conversación…</p>
+          <ChatSkeleton />
         ) : messages.length === 0 ? (
           <p className="mt-10 text-center text-sm font-semibold text-slate-400">
             ¡Hagan match para coordinar su próximo partido! 🏅

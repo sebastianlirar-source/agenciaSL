@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../context/ProfileContext'
 import SwipeCard from '../components/SwipeCard'
 import MatchModal from '../components/MatchModal'
+import Logo from '../components/Logo'
+import { DiscoverCardSkeleton } from '../components/Skeleton'
 
 export default function Discover() {
   const { user } = useAuth()
@@ -107,10 +109,9 @@ export default function Discover() {
   return (
     <div className="flex h-dvh flex-col pb-16">
       <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">
-            Descubrir <span className="text-energy-orange">🏆</span>
-          </h1>
+        <div className="flex items-center gap-2">
+          <Logo size={28} />
+          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">Descubrir</h1>
         </div>
         <select
           value={filterSportId}
@@ -128,7 +129,9 @@ export default function Discover() {
 
       <div className="relative mx-auto flex w-full max-w-md flex-1 items-center justify-center px-4 py-4">
         {loading ? (
-          <p className="text-sm font-semibold text-slate-400">Buscando deportistas…</p>
+          <div className="relative h-[70vh] w-full max-h-[560px]">
+            <DiscoverCardSkeleton />
+          </div>
         ) : visible.length === 0 ? (
           <div className="text-center">
             <p className="text-5xl">🔍</p>
@@ -169,10 +172,12 @@ export default function Discover() {
           </button>
           <button
             onClick={() => handleSwipe('right', visible[0])}
-            className="flex h-16 w-16 items-center justify-center rounded-full bg-energy-green text-3xl text-white shadow-xl active:scale-90"
+            className="flex h-16 w-16 items-center justify-center rounded-full bg-energy-green text-white shadow-xl active:scale-90"
             aria-label="Me interesa"
           >
-            ♥
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="h-7 w-7">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4.5 4.5L19 7" />
+            </svg>
           </button>
         </div>
       )}
