@@ -36,18 +36,38 @@
     <!-- Hero -->
     <section class="hero" id="inicio">
       <div class="hero__glow" aria-hidden="true"></div>
-      <div class="container hero__inner">
-        <p class="eyebrow fade-in">Marketing + Inteligencia Artificial</p>
-        <h1 class="hero__title fade-in">
-          Impulsamos tu marca con <span class="text-gradient">marketing potenciado por IA</span>
-        </h1>
-        <p class="hero__subtitle fade-in">
-          En agenciaSL combinamos estrategia, datos y automatización inteligente para que tu negocio
-          crezca más rápido, con decisiones basadas en resultados reales.
-        </p>
-        <div class="hero__actions fade-in">
-          <a href="#contacto" class="btn btn--primary">Agenda una consultoría</a>
-          <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+      <div class="container hero__grid">
+        <div class="hero__inner">
+          <p class="eyebrow fade-in">Marketing + Inteligencia Artificial</p>
+          <h1 class="hero__title fade-in">
+            Impulsamos tu marca con <span class="text-gradient">marketing potenciado por IA</span>
+          </h1>
+          <p class="hero__subtitle fade-in">
+            En agenciaSL combinamos estrategia, datos y automatización inteligente para que tu negocio
+            crezca más rápido, con decisiones basadas en resultados reales.
+          </p>
+          <div class="hero__actions fade-in">
+            <a href="#contacto" class="btn btn--primary">Agenda una consultoría</a>
+            <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+          </div>
+        </div>
+
+        <div class="hero__visual fade-in" aria-hidden="true">
+          <canvas id="heroCanvas" class="hero__canvas"></canvas>
+          <div class="hero__stat-card">
+            <div class="hero__stat-card-header">
+              <span class="hero__stat-dot"></span>
+              Rendimiento de campaña
+            </div>
+            <div class="hero__stat-chart">
+              <span style="--h: 38%"></span>
+              <span style="--h: 55%"></span>
+              <span style="--h: 48%"></span>
+              <span style="--h: 74%"></span>
+              <span style="--h: 92%"></span>
+            </div>
+            <div class="hero__stat-value">+248% <small>ROI promedio en 90 días</small></div>
+          </div>
         </div>
       </div>
     </section>
@@ -96,8 +116,8 @@
 
     <!-- Nosotros -->
     <section class="nosotros" id="nosotros">
-      <div class="container nosotros__inner">
-        <div class="fade-in">
+      <div class="container nosotros__grid">
+        <div class="fade-in nosotros__inner">
           <p class="section-tag">Sobre nosotros</p>
           <h2 class="section-title">Somos el punto de encuentro entre creatividad y tecnología</h2>
           <p class="nosotros__text">
@@ -121,6 +141,33 @@
             </div>
           </div>
         </div>
+
+        <div class="nosotros__visual fade-in" aria-hidden="true">
+          <svg viewBox="0 0 320 320" class="orbit">
+            <circle cx="160" cy="160" r="150" class="orbit__ring orbit__ring--outer" />
+            <circle cx="160" cy="160" r="102" class="orbit__ring" />
+            <line x1="160" y1="160" x2="160" y2="34" class="orbit__spoke" />
+            <line x1="160" y1="160" x2="272" y2="222" class="orbit__spoke" />
+            <line x1="160" y1="160" x2="48" y2="222" class="orbit__spoke" />
+
+            <circle cx="160" cy="160" r="46" class="orbit__core" />
+            <text x="160" y="155" class="orbit__core-label">agencia</text>
+            <text x="160" y="173" class="orbit__core-label orbit__core-label--accent">SL</text>
+
+            <g class="orbit__node orbit__node--ia" transform="translate(160,34)">
+              <circle r="30" class="orbit__node-circle" />
+              <text class="orbit__node-label" y="4">IA</text>
+            </g>
+            <g class="orbit__node orbit__node--datos" transform="translate(272,222)">
+              <circle r="30" class="orbit__node-circle" />
+              <text class="orbit__node-label" y="4">Datos</text>
+            </g>
+            <g class="orbit__node orbit__node--estrategia" transform="translate(48,222)">
+              <circle r="30" class="orbit__node-circle" />
+              <text class="orbit__node-label" y="4">Estrategia</text>
+            </g>
+          </svg>
+        </div>
       </div>
     </section>
 
@@ -134,24 +181,33 @@
           <blockquote class="testimonial fade-in">
             <p class="testimonial__text">"Con agenciaSL triplicamos nuestros leads en tres meses gracias a la automatización con IA."</p>
             <footer class="testimonial__author">
-              <span class="testimonial__name">Camila Rojas</span>
-              <span class="testimonial__role">Directora de Marketing, Nortex</span>
+              <span class="testimonial__avatar">CR</span>
+              <span class="testimonial__author-info">
+                <span class="testimonial__name">Camila Rojas</span>
+                <span class="testimonial__role">Directora de Marketing, Nortex</span>
+              </span>
             </footer>
           </blockquote>
 
           <blockquote class="testimonial fade-in">
             <p class="testimonial__text">"El análisis de datos que nos entregaron cambió por completo la forma en que tomamos decisiones."</p>
             <footer class="testimonial__author">
-              <span class="testimonial__name">Ignacio Pérez</span>
-              <span class="testimonial__role">CEO, Vantia</span>
+              <span class="testimonial__avatar">IP</span>
+              <span class="testimonial__author-info">
+                <span class="testimonial__name">Ignacio Pérez</span>
+                <span class="testimonial__role">CEO, Vantia</span>
+              </span>
             </footer>
           </blockquote>
 
           <blockquote class="testimonial fade-in">
             <p class="testimonial__text">"El contenido generado con IA mantuvo nuestra identidad de marca y nos ahorró semanas de trabajo."</p>
             <footer class="testimonial__author">
-              <span class="testimonial__name">Fernanda Soto</span>
-              <span class="testimonial__role">Fundadora, Loop Studio</span>
+              <span class="testimonial__avatar">FS</span>
+              <span class="testimonial__author-info">
+                <span class="testimonial__name">Fernanda Soto</span>
+                <span class="testimonial__role">Fundadora, Loop Studio</span>
+              </span>
             </footer>
           </blockquote>
         </div>

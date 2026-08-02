@@ -1,4 +1,105 @@
+function initHeroCanvas() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLORS = ['79, 123, 255', '155, 92, 255', '61, 255, 192'];
+  const LINK_DISTANCE = 130;
+
+  let width = 0;
+  let height = 0;
+  let particles = [];
+  let frameId = null;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = canvas.clientWidth;
+    height = canvas.clientHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createParticles() {
+    const count = Math.min(Math.max(Math.round((width * height) / 9000), 18), 40);
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      r: Math.random() * 1.6 + 1,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > width) p.vx *= -1;
+      if (p.y < 0 || p.y > height) p.vy *= -1;
+    });
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+        if (dist < LINK_DISTANCE) {
+          ctx.strokeStyle = `rgba(${a.color}, ${0.22 * (1 - dist / LINK_DISTANCE)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    particles.forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, 0.9)`;
+      ctx.fill();
+    });
+  }
+
+  function loop() {
+    draw();
+    frameId = requestAnimationFrame(loop);
+  }
+
+  resize();
+  createParticles();
+
+  if (prefersReduced) {
+    draw();
+  } else {
+    loop();
+  }
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (frameId) cancelAnimationFrame(frameId);
+      resize();
+      createParticles();
+      if (prefersReduced) {
+        draw();
+      } else {
+        loop();
+      }
+    }, 150);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroCanvas();
+
   const header = document.getElementById('header');
   const menuToggle = document.getElementById('menuToggle');
   const nav = document.getElementById('nav');
