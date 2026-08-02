@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-electric: #2563eb;
+  --color-electric-light: #3b82f6;
+  --color-energy-orange: #ff6b35;
+  --color-energy-orange-dark: #e8531f;
+  --color-energy-green: #22c55e;
+  --color-energy-green-dark: #16a34a;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50;
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes swipe-right {
+  to {
+    transform: translateX(150%) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-left {
+  to {
+    transform: translateX(-150%) rotate(-20deg);
+    opacity: 0;
+  }
+}
+
+.animate-swipe-right {
+  animation: swipe-right 0.4s ease-in forwards;
+}
+
+.animate-swipe-left {
+  animation: swipe-left 0.4s ease-in forwards;
+}
