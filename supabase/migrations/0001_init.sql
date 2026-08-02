@@ -146,28 +146,33 @@ alter table public.messages enable row level security;
 -- ---- profiles ----
 -- Todos los usuarios autenticados pueden ver perfiles (necesario para
 -- "Descubrir"); solo el dueño puede crear/editar/borrar el suyo.
+drop policy if exists "profiles_select_authenticated" on public.profiles;
 create policy "profiles_select_authenticated"
   on public.profiles for select
   to authenticated
   using (true);
 
+drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own"
   on public.profiles for insert
   to authenticated
   with check (auth.uid() = user_id);
 
+drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
   on public.profiles for update
   to authenticated
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 
+drop policy if exists "profiles_delete_own" on public.profiles;
 create policy "profiles_delete_own"
   on public.profiles for delete
   to authenticated
   using (auth.uid() = user_id);
 
 -- ---- sports (catálogo de solo lectura) ----
+drop policy if exists "sports_select_authenticated" on public.sports;
 create policy "sports_select_authenticated"
   on public.sports for select
   to authenticated
@@ -176,22 +181,26 @@ create policy "sports_select_authenticated"
 -- ---- user_sports ----
 -- Visibles para todos (se muestran en las tarjetas de Descubrir),
 -- pero cada usuario solo administra los suyos.
+drop policy if exists "user_sports_select_authenticated" on public.user_sports;
 create policy "user_sports_select_authenticated"
   on public.user_sports for select
   to authenticated
   using (true);
 
+drop policy if exists "user_sports_insert_own" on public.user_sports;
 create policy "user_sports_insert_own"
   on public.user_sports for insert
   to authenticated
   with check (auth.uid() = user_id);
 
+drop policy if exists "user_sports_update_own" on public.user_sports;
 create policy "user_sports_update_own"
   on public.user_sports for update
   to authenticated
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 
+drop policy if exists "user_sports_delete_own" on public.user_sports;
 create policy "user_sports_delete_own"
   on public.user_sports for delete
   to authenticated
@@ -200,16 +209,19 @@ create policy "user_sports_delete_own"
 -- ---- likes ----
 -- Un usuario solo ve los likes que él mismo dio (para no revelar quién
 -- lo likeó antes de haber match) y solo puede insertar/borrar los suyos.
+drop policy if exists "likes_select_own" on public.likes;
 create policy "likes_select_own"
   on public.likes for select
   to authenticated
   using (auth.uid() = from_user_id);
 
+drop policy if exists "likes_insert_own" on public.likes;
 create policy "likes_insert_own"
   on public.likes for insert
   to authenticated
   with check (auth.uid() = from_user_id);
 
+drop policy if exists "likes_delete_own" on public.likes;
 create policy "likes_delete_own"
   on public.likes for delete
   to authenticated
@@ -219,6 +231,7 @@ create policy "likes_delete_own"
 -- Solo visibles para los dos usuarios involucrados. Se crean únicamente
 -- vía el trigger (security definer); no se permite insert/update/delete
 -- directo desde el cliente.
+drop policy if exists "matches_select_participant" on public.matches;
 create policy "matches_select_participant"
   on public.matches for select
   to authenticated
@@ -226,6 +239,7 @@ create policy "matches_select_participant"
 
 -- ---- messages ----
 -- Solo los participantes del match pueden leer/enviar mensajes de ese match.
+drop policy if exists "messages_select_participant" on public.messages;
 create policy "messages_select_participant"
   on public.messages for select
   to authenticated
@@ -237,6 +251,7 @@ create policy "messages_select_participant"
     )
   );
 
+drop policy if exists "messages_insert_participant" on public.messages;
 create policy "messages_insert_participant"
   on public.messages for insert
   to authenticated
@@ -252,8 +267,22 @@ create policy "messages_insert_participant"
 -- ============================================================
 -- REALTIME
 -- ============================================================
-alter publication supabase_realtime add table public.messages;
-alter publication supabase_realtime add table public.matches;
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'messages'
+  ) then
+    alter publication supabase_realtime add table public.messages;
+  end if;
+
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'matches'
+  ) then
+    alter publication supabase_realtime add table public.matches;
+  end if;
+end $$;
 
 -- ============================================================
 -- STORAGE: bucket público para fotos de perfil
@@ -262,11 +291,13 @@ insert into storage.buckets (id, name, public)
 values ('avatars', 'avatars', true)
 on conflict (id) do nothing;
 
+drop policy if exists "avatar_public_read" on storage.objects;
 create policy "avatar_public_read"
   on storage.objects for select
   to public
   using (bucket_id = 'avatars');
 
+drop policy if exists "avatar_upload_own" on storage.objects;
 create policy "avatar_upload_own"
   on storage.objects for insert
   to authenticated
@@ -275,6 +306,7 @@ create policy "avatar_upload_own"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
+drop policy if exists "avatar_update_own" on storage.objects;
 create policy "avatar_update_own"
   on storage.objects for update
   to authenticated
@@ -283,6 +315,7 @@ create policy "avatar_update_own"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
+drop policy if exists "avatar_delete_own" on storage.objects;
 create policy "avatar_delete_own"
   on storage.objects for delete
   to authenticated
