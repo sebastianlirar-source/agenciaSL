@@ -3,10 +3,13 @@ import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../context/ProfileContext'
 import { SPORT_EMOJI } from '../lib/constants'
 import ProfileForm from '../components/ProfileForm'
+import ThemeToggle from '../components/ThemeToggle'
+import { useTheme } from '../context/ThemeContext'
 
 export default function Profile() {
   const { signOut, user } = useAuth()
   const { profile, mySports, refreshProfile } = useProfile()
+  const { theme } = useTheme()
   const [editing, setEditing] = useState(false)
 
   async function handleSaved() {
@@ -81,7 +84,15 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-3">
+      <div className="mt-6 flex items-center justify-between rounded-2xl bg-slate-100 px-4 py-3 dark:bg-slate-800">
+        <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+          <span className="text-lg">{theme === 'dark' ? '🌙' : '☀️'}</span>
+          Modo {theme === 'dark' ? 'oscuro' : 'claro'}
+        </div>
+        <ThemeToggle />
+      </div>
+
+      <div className="mt-6 flex flex-col gap-3">
         <button
           onClick={() => setEditing(true)}
           className="rounded-xl bg-electric py-3 font-bold text-white shadow-lg shadow-electric/30 transition active:scale-[0.98]"
