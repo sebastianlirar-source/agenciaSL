@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { ChatSkeleton } from '../components/Skeleton'
+import AmbientBackground from '../components/AmbientBackground'
 
 export default function Chat() {
   const { matchId } = useParams()
@@ -93,8 +94,9 @@ export default function Chat() {
   }
 
   return (
-    <div className="mx-auto flex h-dvh max-w-md flex-col bg-slate-50 dark:bg-slate-950">
-      <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
+    <div className="relative mx-auto flex h-dvh max-w-md flex-col">
+      <AmbientBackground />
+      <header className="flex items-center gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
         <Link to="/matches" className="text-2xl text-slate-500 dark:text-slate-400">
           ‹
         </Link>
@@ -139,7 +141,7 @@ export default function Chat() {
 
       <form
         onSubmit={handleSend}
-        className="flex items-center gap-2 border-t border-slate-200 bg-white p-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] dark:border-slate-800 dark:bg-slate-900"
+        className="flex items-center gap-2 border-t border-slate-200 bg-white/90 p-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/90"
       >
         <input
           value={text}
