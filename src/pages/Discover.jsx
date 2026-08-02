@@ -9,7 +9,7 @@ import { DiscoverCardSkeleton } from '../components/Skeleton'
 
 export default function Discover() {
   const { user } = useAuth()
-  const { profile } = useProfile()
+  const { profile, mySports } = useProfile()
 
   const [sportsCatalog, setSportsCatalog] = useState([])
   const [filterSportId, setFilterSportId] = useState('')
@@ -17,6 +17,9 @@ export default function Discover() {
   const [index, setIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [match, setMatch] = useState(null)
+  const [history, setHistory] = useState([])
+
+  const myOwnSportIds = new Set(mySports.map((s) => s.sport_id))
 
   useEffect(() => {
     supabase
@@ -69,19 +72,28 @@ export default function Discover() {
       sportsByUser[row.user_id].push({ sport_id: row.sports.id, nombre: row.sports.nombre, nivel: row.nivel })
     }
 
+    const myIds = new Set(mySports.map((s) => s.sport_id))
+
     const enriched = base
       .map((p) => ({ ...p, sports: sportsByUser[p.user_id] ?? [] }))
       .filter((p) => p.sports.length > 0)
+      .map((p) => ({
+        ...p,
+        sharedCount: p.sports.filter((s) => myIds.has(s.sport_id)).length,
+      }))
+      .sort((a, b) => b.sharedCount - a.sharedCount)
 
     setCandidates(enriched)
     setLoading(false)
-  }, [user.id, filterSportId])
+  }, [user.id, filterSportId, mySports])
 
   useEffect(() => {
     loadCandidates()
   }, [loadCandidates])
 
   async function handleSwipe(direction, candidate) {
+    let matched = false
+
     if (direction === 'right') {
       const { error } = await supabase
         .from('likes')
@@ -97,11 +109,32 @@ export default function Discover() {
           .maybeSingle()
 
         if (matchRow) {
-          setMatch({ ...matchRow, myProfile: profile, otherProfile: candidate })
+          const sharedSports = candidate.sports.filter((s) => myOwnSportIds.has(s.sport_id))
+          setMatch({ ...matchRow, myProfile: profile, otherProfile: candidate, sharedSports })
+          matched = true
         }
       }
     }
+
+    // Un match ya celebrado no se puede deshacer: solo apilamos pases y likes sin match.
+    if (!matched) {
+      setHistory((h) => [...h, { candidate, direction }])
+    }
     setIndex((i) => i + 1)
+  }
+
+  async function handleUndo() {
+    const last = history[history.length - 1]
+    if (!last) return
+    setHistory((h) => h.slice(0, -1))
+    setIndex((i) => Math.max(0, i - 1))
+    if (last.direction === 'right') {
+      await supabase
+        .from('likes')
+        .delete()
+        .eq('from_user_id', user.id)
+        .eq('to_user_id', last.candidate.user_id)
+    }
   }
 
   const visible = candidates.slice(index, index + 2)
@@ -138,12 +171,22 @@ export default function Discover() {
             <p className="mt-3 font-semibold text-slate-500 dark:text-slate-400">
               No hay más perfiles por ahora
             </p>
-            <button
-              onClick={loadCandidates}
-              className="mt-4 rounded-full bg-electric px-5 py-2 text-sm font-bold text-white"
-            >
-              Volver a buscar
-            </button>
+            <div className="mt-4 flex flex-col items-center gap-2">
+              <button
+                onClick={loadCandidates}
+                className="rounded-full bg-electric px-5 py-2 text-sm font-bold text-white"
+              >
+                Volver a buscar
+              </button>
+              {filterSportId && (
+                <button
+                  onClick={() => setFilterSportId('')}
+                  className="text-sm font-semibold text-slate-500 underline underline-offset-2 dark:text-slate-400"
+                >
+                  Ampliar búsqueda a todos los deportes
+                </button>
+              )}
+            </div>
           </div>
         ) : (
           <div className="relative h-[70vh] w-full max-h-[560px]">
@@ -153,6 +196,7 @@ export default function Discover() {
                   key={candidate.user_id}
                   candidate={candidate}
                   isTop={i === 0}
+                  sharedIds={myOwnSportIds}
                   onSwipe={(dir) => handleSwipe(dir, candidate)}
                 />
               ))
@@ -162,7 +206,15 @@ export default function Discover() {
       </div>
 
       {!loading && visible.length > 0 && (
-        <div className="flex items-center justify-center gap-8 pb-4">
+        <div className="flex items-center justify-center gap-6 pb-4">
+          <button
+            onClick={handleUndo}
+            disabled={history.length === 0}
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-xl text-slate-400 shadow-md active:scale-90 disabled:opacity-30 dark:bg-slate-800"
+            aria-label="Deshacer"
+          >
+            ↺
+          </button>
           <button
             onClick={() => handleSwipe('left', visible[0])}
             className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-3xl text-red-500 shadow-xl active:scale-90 dark:bg-slate-800"

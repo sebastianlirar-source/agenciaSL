@@ -1,5 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 
+function buildIcebreaker(match) {
+  const name = match.otherProfile?.nombre ?? ''
+  const shared = match.sharedSports ?? []
+
+  if (shared.length === 1) {
+    return `¡Hola ${name}! Vi que también juegas ${shared[0].nombre} 🏆 ¿Jugamos esta semana?`
+  }
+  if (shared.length > 1) {
+    return `¡Hola ${name}! Vi que compartimos varios deportes 🏆 ¿Cuál te gustaría jugar primero?`
+  }
+  return `¡Hola ${name}! ¿Cuándo te acomoda para jugar? 🏆`
+}
+
 export default function MatchModal({ match, onClose }) {
   const navigate = useNavigate()
   if (!match) return null
@@ -26,7 +39,7 @@ export default function MatchModal({ match, onClose }) {
 
         <div className="mt-8 flex flex-col gap-3">
           <button
-            onClick={() => navigate(`/matches/${match.id}`)}
+            onClick={() => navigate(`/matches/${match.id}`, { state: { prefill: buildIcebreaker(match) } })}
             className="rounded-xl bg-white py-3 font-bold text-energy-orange-dark shadow-lg active:scale-[0.98]"
           >
             Enviar mensaje

@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { ChatSkeleton } from '../components/Skeleton'
 import AmbientBackground from '../components/AmbientBackground'
 
+const QUICK_REPLIES = ['¿Jugamos esta semana? 🏆', '¿Qué día te acomoda?', '¿Dónde jugamos? 📍']
+
 export default function Chat() {
   const { matchId } = useParams()
+  const location = useLocation()
   const { user } = useAuth()
   const [otherProfile, setOtherProfile] = useState(null)
   const [messages, setMessages] = useState([])
   const [text, setText] = useState('')
   const [loading, setLoading] = useState(true)
   const bottomRef = useRef(null)
+
+  useEffect(() => {
+    if (location.state?.prefill) setText(location.state.prefill)
+  }, [location.state])
 
   useEffect(() => {
     let active = true
@@ -114,9 +121,23 @@ export default function Chat() {
         {loading ? (
           <ChatSkeleton />
         ) : messages.length === 0 ? (
-          <p className="mt-10 text-center text-sm font-semibold text-slate-400">
-            ¡Hagan match para coordinar su próximo partido! 🏅
-          </p>
+          <div className="mt-10 flex flex-col items-center gap-3">
+            <p className="text-center text-sm font-semibold text-slate-400">
+              ¡Hagan match para coordinar su próximo partido! 🏅
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 px-4">
+              {QUICK_REPLIES.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => setText(q)}
+                  className="rounded-full border border-electric/30 bg-electric/5 px-3 py-1.5 text-xs font-semibold text-electric dark:bg-electric/10"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
         ) : (
           <div className="flex flex-col gap-2">
             {messages.map((m) => {

@@ -3,7 +3,7 @@ import { SPORT_EMOJI } from '../lib/constants'
 
 const THRESHOLD = 100
 
-export default function SwipeCard({ candidate, onSwipe, isTop }) {
+export default function SwipeCard({ candidate, onSwipe, isTop, sharedIds }) {
   const cardRef = useRef(null)
   const [dragging, setDragging] = useState(false)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
@@ -81,9 +81,16 @@ export default function SwipeCard({ candidate, onSwipe, isTop }) {
         )}
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-          <h2 className="text-2xl font-extrabold text-white">
-            {candidate.nombre}, {candidate.edad}
-          </h2>
+          <div className="mb-1 flex flex-wrap items-center gap-2">
+            <h2 className="text-2xl font-extrabold text-white">
+              {candidate.nombre}, {candidate.edad}
+            </h2>
+            {candidate.sharedCount > 0 && (
+              <span className="rounded-full bg-energy-green px-2 py-0.5 text-[11px] font-bold text-white">
+                🤝 {candidate.sharedCount} en común
+              </span>
+            )}
+          </div>
           <p className="text-sm font-medium text-white/90">📍 {candidate.comuna}</p>
         </div>
       </div>
@@ -92,14 +99,22 @@ export default function SwipeCard({ candidate, onSwipe, isTop }) {
         {candidate.bio && <p className="text-sm text-slate-600 dark:text-slate-300">{candidate.bio}</p>}
 
         <div className="flex flex-wrap gap-2">
-          {sports.map((s) => (
-            <span
-              key={s.sport_id}
-              className="flex items-center gap-1 rounded-full bg-energy-orange/10 px-3 py-1 text-xs font-semibold text-energy-orange-dark"
-            >
-              {SPORT_EMOJI[s.nombre] ?? '🏅'} {s.nombre} · {s.nivel}
-            </span>
-          ))}
+          {sports.map((s) => {
+            const shared = sharedIds?.has(s.sport_id)
+            return (
+              <span
+                key={s.sport_id}
+                className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
+                  shared
+                    ? 'bg-energy-green/15 text-energy-green-dark ring-1 ring-energy-green/40'
+                    : 'bg-energy-orange/10 text-energy-orange-dark'
+                }`}
+              >
+                {shared && '✓ '}
+                {SPORT_EMOJI[s.nombre] ?? '🏅'} {s.nombre} · {s.nivel}
+              </span>
+            )
+          })}
         </div>
 
         {candidate.disponibilidad?.length > 0 && (
