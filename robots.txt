@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agenciasl-ah9z.vercel.app/sitemap.xml
