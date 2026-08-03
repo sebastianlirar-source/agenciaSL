@@ -226,7 +226,13 @@
           </p>
         </div>
 
-        <form class="form fade-in" id="contactForm" novalidate>
+        <form
+          class="form fade-in"
+          id="contactForm"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          novalidate
+        >
           <div class="form__group">
             <label for="name">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Tu nombre" required />

@@ -237,8 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeEls.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Contact form (front-end only, no backend wired up)
-  contactForm.addEventListener('submit', (e) => {
+  // Contact form (submits to Formspree)
+  const submitBtn = contactForm.querySelector('.form__submit');
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
 
@@ -248,8 +250,31 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
     formNote.style.color = '';
-    formNote.textContent = `¡Gracias${name ? ', ' + name : ''}! Recibimos tu mensaje y te contactaremos pronto.`;
-    contactForm.reset();
+    formNote.textContent = '';
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (response.ok) {
+        formNote.textContent = `¡Gracias${name ? ', ' + name : ''}! Recibimos tu mensaje y te contactaremos pronto.`;
+        contactForm.reset();
+      } else {
+        formNote.style.color = '#ff7676';
+        formNote.textContent = 'No pudimos enviar tu mensaje. Intenta nuevamente o escríbenos directo por email.';
+      }
+    } catch (err) {
+      formNote.style.color = '#ff7676';
+      formNote.textContent = 'Error de conexión. Intenta nuevamente en unos minutos.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar mensaje';
+    }
   });
 });
