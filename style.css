@@ -226,6 +226,7 @@ h1, h2, h3 {
 /* ---------- Hero visual ---------- */
 .hero__visual {
   position: relative;
+  perspective: 1000px;
 }
 
 .hero__canvas {
@@ -248,6 +249,13 @@ h1, h2, h3 {
   border-radius: 14px;
   padding: 16px 18px;
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7);
+  transform-style: preserve-3d;
+  transform: rotateX(9deg) rotateY(-15deg);
+  transition: transform 0.5s ease;
+}
+
+.hero__visual:hover .hero__stat-card {
+  transform: rotateX(3deg) rotateY(-5deg);
 }
 
 .hero__stat-card-header {
@@ -724,6 +732,10 @@ section {
   .hero__stat-dot,
   .orbit__ring--outer {
     animation: none;
+  }
+
+  .hero__stat-card {
+    transition: none;
   }
 
   .fade-in {
