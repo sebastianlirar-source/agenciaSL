@@ -13,6 +13,10 @@ import Discover from './pages/Discover'
 import Matches from './pages/Matches'
 import Chat from './pages/Chat'
 import Profile from './pages/Profile'
+import Partidos from './pages/Partidos'
+import PartidoNuevo from './pages/PartidoNuevo'
+import PartidoDetalle from './pages/PartidoDetalle'
+import PartidoChat from './pages/PartidoChat'
 
 function PublicOnly({ children }) {
   const { user, loading } = useAuth()
@@ -34,10 +38,14 @@ function App() {
 
           <Route element={<RequireProfile />}>
             <Route path="/matches/:matchId" element={<Chat />} />
+            <Route path="/partidos/nuevo" element={<PartidoNuevo />} />
+            <Route path="/partidos/:partidoId" element={<PartidoDetalle />} />
+            <Route path="/partidos/:partidoId/chat" element={<PartidoChat />} />
 
             <Route element={<Layout />}>
               <Route path="/" element={<Discover />} />
               <Route path="/matches" element={<Matches />} />
+              <Route path="/partidos" element={<Partidos />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Route>

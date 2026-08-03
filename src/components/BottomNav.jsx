@@ -11,6 +11,17 @@ const ITEMS = [
     ),
   },
   {
+    to: '/partidos',
+    label: 'Partidos',
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" className="h-6 w-6">
+        <circle cx="8" cy="8" r="3" />
+        <circle cx="17" cy="9" r="2.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 20c0-3.5 2.7-6 5.5-6s5.5 2.5 5.5 6M14.5 20c0-2.6 1.8-5 4-5.4" />
+      </svg>
+    ),
+  },
+  {
     to: '/matches',
     label: 'Matches',
     icon: (active) => (
