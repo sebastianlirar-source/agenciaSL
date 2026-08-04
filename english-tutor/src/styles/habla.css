@@ -262,6 +262,7 @@ body {
 }
 .hb-text-input {
   flex: 1;
+  min-width: 0;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 24px;
@@ -277,6 +278,7 @@ body {
   color: var(--text-muted);
 }
 .hb-mic {
+  flex-shrink: 0;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
@@ -295,6 +297,7 @@ body {
   cursor: not-allowed;
 }
 .hb-send {
+  flex-shrink: 0;
   background: var(--amber);
   color: var(--ink);
   border: none;
@@ -674,6 +677,9 @@ body {
   .hb-panel {
     margin: 0 16px 20px;
     padding: 16px;
+  }
+  .hb-convo {
+    padding: 0;
   }
   .hb-bubble {
     max-width: 88%;
