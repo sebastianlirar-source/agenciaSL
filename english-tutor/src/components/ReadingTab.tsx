@@ -16,6 +16,7 @@ export function ReadingTab({
   const [topic, setTopic] = useState<string>(TOPICS[0]);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ReadingData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [checked, setChecked] = useState(false);
   const supabase = createClient();
@@ -23,6 +24,7 @@ export function ReadingTab({
   const generate = async () => {
     setLoading(true);
     setData(null);
+    setError(null);
     setAnswers({});
     setChecked(false);
     try {
@@ -34,7 +36,7 @@ export function ReadingTab({
       if (!res.ok) throw new Error("reading api error");
       setData(await res.json());
     } catch {
-      setData(null);
+      setError("No se pudo generar la lectura. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -81,6 +83,7 @@ export function ReadingTab({
       </div>
 
       {loading && <Spinner label="Escribiendo tu lectura…" />}
+      {error && <div className="hb-form-error">{error}</div>}
 
       {data && (
         <div className="hb-paper">

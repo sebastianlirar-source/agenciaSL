@@ -16,6 +16,7 @@ export function ListeningTab({
   const [topic, setTopic] = useState<string>(TOPICS[1]);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ListeningData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [checked, setChecked] = useState(false);
   const [showScript, setShowScript] = useState(false);
@@ -26,6 +27,7 @@ export function ListeningTab({
   const generate = async () => {
     setLoading(true);
     setData(null);
+    setError(null);
     setAnswers({});
     setChecked(false);
     setShowScript(false);
@@ -38,7 +40,7 @@ export function ListeningTab({
       if (!res.ok) throw new Error("listening api error");
       setData(await res.json());
     } catch {
-      setData(null);
+      setError("No se pudo generar el audio. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -119,6 +121,7 @@ export function ListeningTab({
       </div>
 
       {loading && <Spinner label="Preparando el audio…" />}
+      {error && <div className="hb-form-error">{error}</div>}
 
       {data && (
         <div className="hb-paper">
