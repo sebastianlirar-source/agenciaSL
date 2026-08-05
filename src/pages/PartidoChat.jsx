@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { ChatSkeleton } from '../components/Skeleton'
-import AmbientBackground from '../components/AmbientBackground'
 import { SPORT_EMOJI } from '../lib/constants'
 
 export default function PartidoChat() {
@@ -111,16 +110,15 @@ export default function PartidoChat() {
   }
 
   return (
-    <div className="relative mx-auto flex h-dvh max-w-md flex-col">
-      <AmbientBackground />
-      <header className="flex items-center gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
-        <Link to={`/partidos/${partidoId}`} className="text-2xl text-slate-500 dark:text-slate-400">
+    <div className="mx-auto flex h-dvh max-w-md flex-col bg-bg">
+      <header className="flex items-center gap-3 border-b border-border px-4 py-3">
+        <Link to={`/partidos/${partidoId}`} className="text-2xl text-text-secondary">
           ‹
         </Link>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-electric/10 text-xl">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-elevated text-xl">
           {SPORT_EMOJI[partido?.sports?.nombre] ?? '🏅'}
         </div>
-        <p className="font-bold text-slate-900 dark:text-white">
+        <p className="font-semibold text-text">
           {partido?.titulo || partido?.sports?.nombre || 'Chat del partido'}
         </p>
       </header>
@@ -129,7 +127,7 @@ export default function PartidoChat() {
         {loading ? (
           <ChatSkeleton />
         ) : messages.length === 0 ? (
-          <p className="mt-10 text-center text-sm font-semibold text-slate-400">
+          <p className="mt-10 text-center text-sm font-semibold text-text-secondary">
             ¡Coordinen los detalles del partido acá! 🏆
           </p>
         ) : (
@@ -139,15 +137,15 @@ export default function PartidoChat() {
               return (
                 <div key={m.id} className={`max-w-[75%] ${mine ? 'ml-auto' : 'mr-auto'}`}>
                   {!mine && (
-                    <p className="mb-0.5 px-1 text-[11px] font-semibold text-slate-400">
+                    <p className="mb-0.5 px-1 text-[11px] font-semibold text-text-secondary">
                       {profilesById[m.sender_id]?.nombre ?? 'Jugador'}
                     </p>
                   )}
                   <div
                     className={`rounded-2xl px-4 py-2 text-sm ${
                       mine
-                        ? 'rounded-br-sm bg-electric text-white'
-                        : 'rounded-bl-sm bg-white text-slate-800 shadow dark:bg-slate-800 dark:text-slate-100'
+                        ? 'rounded-br-sm bg-lime text-bg'
+                        : 'rounded-bl-sm border border-border bg-surface text-text'
                     }`}
                   >
                     {m.content}
@@ -162,20 +160,22 @@ export default function PartidoChat() {
 
       <form
         onSubmit={handleSend}
-        className="flex items-center gap-2 border-t border-slate-200 bg-white/90 p-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/90"
+        className="flex items-center gap-2 border-t border-border p-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]"
       >
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Escribe un mensaje…"
-          className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+          className="flex-1 rounded-full border border-border bg-surface px-4 py-2.5 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
         />
         <button
           type="submit"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-energy-orange text-white shadow-md active:scale-90"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-lime text-bg active:scale-90"
           aria-label="Enviar"
         >
-          ➤
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-4 w-4">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 20V4l17 8-17 8Zm0-8h8" />
+          </svg>
         </button>
       </form>
     </div>

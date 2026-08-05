@@ -1,11 +1,25 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../context/ProfileContext'
-import SwipeCard from '../components/SwipeCard'
+import { NIVELES, SPORT_EMOJI } from '../lib/constants'
+import { LevelBars } from '../components/LevelBars'
 import MatchModal from '../components/MatchModal'
 import Logo from '../components/Logo'
-import { DiscoverCardSkeleton } from '../components/Skeleton'
+import { ListItemSkeleton } from '../components/Skeleton'
+
+function computeMatch(candidate, mySportIds, myLevelBySport, myComuna) {
+  const shared = candidate.sports.filter((s) => mySportIds.has(s.sport_id))
+  if (shared.length === 0) return { percent: 0, shared: [] }
+
+  const sportScore = Math.min(shared.length / Math.max(mySportIds.size, 1), 1) * 50
+  const levelMatches = shared.filter((s) => myLevelBySport[s.sport_id] === s.nivel).length
+  const levelScore = (levelMatches / shared.length) * 30
+  const comunaScore = myComuna && candidate.comuna === myComuna ? 20 : 0
+
+  return { percent: Math.round(sportScore + levelScore + comunaScore), shared }
+}
 
 export default function Discover() {
   const { user } = useAuth()
@@ -13,13 +27,12 @@ export default function Discover() {
 
   const [sportsCatalog, setSportsCatalog] = useState([])
   const [filterSportId, setFilterSportId] = useState('')
+  const [filterNivel, setFilterNivel] = useState('')
   const [candidates, setCandidates] = useState([])
-  const [index, setIndex] = useState(0)
+  const [sentIds, setSentIds] = useState(new Set())
+  const [partidos, setPartidos] = useState([])
   const [loading, setLoading] = useState(true)
   const [match, setMatch] = useState(null)
-  const [history, setHistory] = useState([])
-
-  const myOwnSportIds = new Set(mySports.map((s) => s.sport_id))
 
   useEffect(() => {
     supabase
@@ -31,13 +44,23 @@ export default function Discover() {
 
   const loadCandidates = useCallback(async () => {
     setLoading(true)
-    setIndex(0)
 
     const { data: myLikes } = await supabase
       .from('likes')
       .select('to_user_id')
       .eq('from_user_id', user.id)
-    const excluded = new Set([user.id, ...(myLikes ?? []).map((l) => l.to_user_id)])
+    const sent = new Set((myLikes ?? []).map((l) => l.to_user_id))
+    setSentIds(sent)
+
+    const { data: myMatches } = await supabase
+      .from('matches')
+      .select('*')
+      .or(`user1_id.eq.${user.id},user2_id.eq.${user.id}`)
+    const matchedIds = new Set(
+      (myMatches ?? []).map((m) => (m.user1_id === user.id ? m.user2_id : m.user1_id))
+    )
+
+    const excluded = new Set([user.id, ...matchedIds])
 
     let eligibleIds = null
     if (filterSportId) {
@@ -73,166 +96,222 @@ export default function Discover() {
     }
 
     const myIds = new Set(mySports.map((s) => s.sport_id))
+    const myLevelBySport = Object.fromEntries(mySports.map((s) => [s.sport_id, s.nivel]))
 
-    const enriched = base
+    let enriched = base
       .map((p) => ({ ...p, sports: sportsByUser[p.user_id] ?? [] }))
       .filter((p) => p.sports.length > 0)
-      .map((p) => ({
-        ...p,
-        sharedCount: p.sports.filter((s) => myIds.has(s.sport_id)).length,
-      }))
-      .sort((a, b) => b.sharedCount - a.sharedCount)
+      .map((p) => {
+        const { percent, shared } = computeMatch(p, myIds, myLevelBySport, profile?.comuna)
+        return { ...p, matchPercent: percent, sharedSports: shared }
+      })
+      .filter((p) => p.matchPercent > 0)
+
+    if (filterNivel) {
+      enriched = enriched.filter((p) => p.sharedSports.some((s) => s.nivel === filterNivel))
+    }
+
+    enriched.sort((a, b) => b.matchPercent - a.matchPercent)
 
     setCandidates(enriched)
     setLoading(false)
-  }, [user.id, filterSportId, mySports])
+  }, [user.id, filterSportId, filterNivel, mySports, profile?.comuna])
 
   useEffect(() => {
     loadCandidates()
   }, [loadCandidates])
 
-  async function handleSwipe(direction, candidate) {
-    let matched = false
+  useEffect(() => {
+    supabase
+      .from('partidos')
+      .select('*, sports ( nombre )')
+      .eq('estado', 'abierto')
+      .order('fecha_hora', { ascending: true })
+      .limit(10)
+      .then(({ data }) => setPartidos(data ?? []))
+  }, [])
 
-    if (direction === 'right') {
-      const { error } = await supabase
-        .from('likes')
-        .insert({ from_user_id: user.id, to_user_id: candidate.user_id })
+  async function handleSendMessage(candidate) {
+    if (sentIds.has(candidate.user_id)) return
 
-      if (!error) {
-        const [a, b] = [user.id, candidate.user_id].sort()
-        const { data: matchRow } = await supabase
-          .from('matches')
-          .select('*')
-          .eq('user1_id', a)
-          .eq('user2_id', b)
-          .maybeSingle()
+    setSentIds((prev) => new Set(prev).add(candidate.user_id))
 
-        if (matchRow) {
-          const sharedSports = candidate.sports.filter((s) => myOwnSportIds.has(s.sport_id))
-          setMatch({ ...matchRow, myProfile: profile, otherProfile: candidate, sharedSports })
-          matched = true
-        }
-      }
+    const { error } = await supabase
+      .from('likes')
+      .insert({ from_user_id: user.id, to_user_id: candidate.user_id })
+
+    if (error) {
+      setSentIds((prev) => {
+        const next = new Set(prev)
+        next.delete(candidate.user_id)
+        return next
+      })
+      return
     }
 
-    // Un match ya celebrado no se puede deshacer: solo apilamos pases y likes sin match.
-    if (!matched) {
-      setHistory((h) => [...h, { candidate, direction }])
-    }
-    setIndex((i) => i + 1)
-  }
+    const [a, b] = [user.id, candidate.user_id].sort()
+    const { data: matchRow } = await supabase
+      .from('matches')
+      .select('*')
+      .eq('user1_id', a)
+      .eq('user2_id', b)
+      .maybeSingle()
 
-  async function handleUndo() {
-    const last = history[history.length - 1]
-    if (!last) return
-    setHistory((h) => h.slice(0, -1))
-    setIndex((i) => Math.max(0, i - 1))
-    if (last.direction === 'right') {
-      await supabase
-        .from('likes')
-        .delete()
-        .eq('from_user_id', user.id)
-        .eq('to_user_id', last.candidate.user_id)
+    if (matchRow) {
+      setMatch({ ...matchRow, myProfile: profile, otherProfile: candidate, sharedSports: candidate.sharedSports })
     }
   }
-
-  const visible = candidates.slice(index, index + 2)
 
   return (
-    <div className="flex h-dvh flex-col pb-16">
-      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
-        <div className="flex items-center gap-2">
+    <div className="flex min-h-dvh flex-col pb-4">
+      <header className="sticky top-0 z-10 border-b border-border bg-bg px-4 py-3">
+        <div className="mb-3 flex items-center gap-2">
           <Logo size={28} />
-          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">Descubrir</h1>
+          <h1 className="text-lg font-bold text-text">Buscar</h1>
         </div>
-        <select
-          value={filterSportId}
-          onChange={(e) => setFilterSportId(e.target.value)}
-          className="mt-2 w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-        >
-          <option value="">Todos los deportes</option>
+
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
+          <button
+            onClick={() => setFilterSportId('')}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+              filterSportId === '' ? 'bg-lime text-bg' : 'border border-border bg-surface text-text-secondary'
+            }`}
+          >
+            Todos los deportes
+          </button>
           {sportsCatalog.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.nombre}
-            </option>
+            <button
+              key={s.id}
+              onClick={() => setFilterSportId(String(s.id))}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+                filterSportId === String(s.id)
+                  ? 'bg-lime text-bg'
+                  : 'border border-border bg-surface text-text-secondary'
+              }`}
+            >
+              {SPORT_EMOJI[s.nombre] ?? '🏅'} {s.nombre}
+            </button>
           ))}
-        </select>
+        </div>
+
+        <div className="no-scrollbar mt-2 flex gap-2 overflow-x-auto pb-1">
+          <button
+            onClick={() => setFilterNivel('')}
+            className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold ${
+              filterNivel === '' ? 'bg-surface-elevated text-text' : 'text-text-secondary'
+            }`}
+          >
+            Todos los niveles
+          </button>
+          {NIVELES.map((n) => (
+            <button
+              key={n}
+              onClick={() => setFilterNivel(n)}
+              className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold ${
+                filterNivel === n ? 'bg-surface-elevated text-text' : 'text-text-secondary'
+              }`}
+            >
+              {n}
+            </button>
+          ))}
+        </div>
       </header>
 
-      <div className="relative mx-auto flex w-full max-w-md flex-1 items-center justify-center px-4 py-4">
+      <div className="flex-1 px-4 py-4">
         {loading ? (
-          <div className="relative h-[70vh] w-full max-h-[560px]">
-            <DiscoverCardSkeleton />
+          <div className="flex flex-col gap-2">
+            <ListItemSkeleton />
+            <ListItemSkeleton />
+            <ListItemSkeleton />
           </div>
-        ) : visible.length === 0 ? (
-          <div className="text-center">
+        ) : candidates.length === 0 ? (
+          <div className="mt-16 text-center">
             <p className="text-5xl">🔍</p>
-            <p className="mt-3 font-semibold text-slate-500 dark:text-slate-400">
-              No hay más perfiles por ahora
-            </p>
-            <div className="mt-4 flex flex-col items-center gap-2">
-              <button
-                onClick={loadCandidates}
-                className="rounded-full bg-electric px-5 py-2 text-sm font-bold text-white"
-              >
-                Volver a buscar
-              </button>
-              {filterSportId && (
-                <button
-                  onClick={() => setFilterSportId('')}
-                  className="text-sm font-semibold text-slate-500 underline underline-offset-2 dark:text-slate-400"
-                >
-                  Ampliar búsqueda a todos los deportes
-                </button>
-              )}
-            </div>
+            <p className="mt-3 font-semibold text-text-secondary">No hay jugadores compatibles por ahora</p>
           </div>
         ) : (
-          <div className="relative h-[70vh] w-full max-h-[560px]">
-            {visible
-              .map((candidate, i) => (
-                <SwipeCard
-                  key={candidate.user_id}
-                  candidate={candidate}
-                  isTop={i === 0}
-                  sharedIds={myOwnSportIds}
-                  onSwipe={(dir) => handleSwipe(dir, candidate)}
-                />
-              ))
-              .reverse()}
+          <div className="flex flex-col gap-2">
+            {candidates.map((c) => {
+              const sent = sentIds.has(c.user_id)
+              return (
+                <div
+                  key={c.user_id}
+                  className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3"
+                >
+                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-surface-elevated">
+                    {c.foto_url ? (
+                      <img src={c.foto_url} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <span className="flex h-full w-full items-center justify-center text-xl">🙂</span>
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="truncate font-semibold text-text">
+                        {c.nombre}, {c.edad}
+                      </p>
+                      <span className="shrink-0 text-xs font-bold text-lime">{c.matchPercent}%</span>
+                    </div>
+                    <p className="truncate text-xs text-text-secondary">📍 {c.comuna}</p>
+                    <div className="mt-1 flex flex-wrap gap-2">
+                      {c.sharedSports.slice(0, 2).map((s) => (
+                        <span key={s.sport_id} className="flex items-center gap-1.5 text-xs text-text-secondary">
+                          {SPORT_EMOJI[s.nombre] ?? '🏅'} {s.nombre}
+                          <LevelBars nivel={s.nivel} />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleSendMessage(c)}
+                    disabled={sent}
+                    aria-label="Enviar mensaje"
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                      sent ? 'bg-surface-elevated text-text-secondary' : 'bg-lime text-bg'
+                    }`}
+                  >
+                    {sent ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4.5 4.5L19 7" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 5h16v11H8l-4 4V5Z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {partidos.length > 0 && (
+          <div className="mt-6">
+            <h2 className="mb-2 text-sm font-semibold text-text-secondary">Partidos abiertos</h2>
+            <div className="no-scrollbar flex gap-3 overflow-x-auto pb-1">
+              {partidos.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/partidos/${p.id}`}
+                  className="w-40 shrink-0 rounded-2xl border border-border bg-surface p-3"
+                >
+                  <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-surface-elevated text-lg">
+                    {SPORT_EMOJI[p.sports?.nombre] ?? '🏅'}
+                  </div>
+                  <p className="truncate text-sm font-semibold text-text">{p.titulo || p.sports?.nombre}</p>
+                  <p className="mt-0.5 truncate text-xs text-text-secondary">
+                    {new Date(p.fecha_hora).toLocaleDateString('es-CL', { day: 'numeric', month: 'short' })} ·{' '}
+                    {p.comuna}
+                  </p>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
-
-      {!loading && visible.length > 0 && (
-        <div className="flex items-center justify-center gap-6 pb-4">
-          <button
-            onClick={handleUndo}
-            disabled={history.length === 0}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-xl text-slate-400 shadow-md active:scale-90 disabled:opacity-30 dark:bg-slate-800"
-            aria-label="Deshacer"
-          >
-            ↺
-          </button>
-          <button
-            onClick={() => handleSwipe('left', visible[0])}
-            className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-3xl text-red-500 shadow-xl active:scale-90 dark:bg-slate-800"
-            aria-label="Pasar"
-          >
-            ✕
-          </button>
-          <button
-            onClick={() => handleSwipe('right', visible[0])}
-            className="flex h-16 w-16 items-center justify-center rounded-full bg-energy-green text-white shadow-xl active:scale-90"
-            aria-label="Me interesa"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="h-7 w-7">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4.5 4.5L19 7" />
-            </svg>
-          </button>
-        </div>
-      )}
 
       <MatchModal match={match} onClose={() => setMatch(null)} />
     </div>

@@ -74,19 +74,17 @@ export default function PartidoNuevo() {
     <div className="px-6 py-8">
       <div className="mb-6 flex flex-col items-center text-center">
         <Logo size={48} className="mb-2" />
-        <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Crear partido</h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Organiza un partido y suma jugadores
-        </p>
+        <h1 className="text-2xl font-bold text-text">Crear partido</h1>
+        <p className="mt-1 text-sm text-text-secondary">Organiza un partido y suma jugadores</p>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Deporte</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Deporte</label>
           <select
             value={sportId}
             onChange={(e) => setSportId(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none focus:border-lime"
           >
             {sportsCatalog.map((s) => (
               <option key={s.id} value={s.id}>
@@ -97,44 +95,40 @@ export default function PartidoNuevo() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">
-            Título (opcional)
-          </label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Título (opcional)</label>
           <input
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             maxLength={60}
             placeholder="Ej: Picadito de los sábados"
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
           />
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Fecha y hora</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Fecha y hora</label>
           <input
             type="datetime-local"
             required
             value={fechaHora}
             onChange={(e) => setFechaHora(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none focus:border-lime"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Comuna</label>
+            <label className="mb-1 block text-sm font-semibold text-text-secondary">Comuna</label>
             <input
               required
               value={comuna}
               onChange={(e) => setComuna(e.target.value)}
               placeholder="Ej: Providencia"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Cupos totales
-            </label>
+            <label className="mb-1 block text-sm font-semibold text-text-secondary">Cupos totales</label>
             <input
               type="number"
               min={2}
@@ -142,24 +136,24 @@ export default function PartidoNuevo() {
               required
               value={cupos}
               onChange={(e) => setCupos(Number(e.target.value))}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none focus:border-lime"
             />
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Lugar</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Lugar</label>
           <input
             required
             value={lugar}
             onChange={(e) => setLugar(e.target.value)}
             placeholder="Ej: Cancha Parque Bustamante"
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Nivel</label>
+          <label className="mb-2 block text-sm font-semibold text-text-secondary">Nivel</label>
           <div className="flex flex-wrap gap-2">
             {PARTIDO_NIVELES.map((n) => (
               <button
@@ -167,9 +161,7 @@ export default function PartidoNuevo() {
                 type="button"
                 onClick={() => setNivel(n)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                  nivel === n
-                    ? 'bg-electric text-white shadow-md shadow-electric/30'
-                    : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                  nivel === n ? 'bg-lime text-bg' : 'border border-border bg-surface text-text-secondary'
                 }`}
               >
                 {n}
@@ -178,12 +170,12 @@ export default function PartidoNuevo() {
           </div>
         </div>
 
-        {error && <p className="text-sm font-medium text-red-500">{error}</p>}
+        {error && <p className="text-sm font-medium text-burnt">{error}</p>}
 
         <button
           type="submit"
           disabled={saving}
-          className="mt-2 rounded-xl bg-energy-green py-3 font-bold text-white shadow-lg shadow-energy-green/30 transition active:scale-[0.98] disabled:opacity-60"
+          className="mt-2 rounded-full bg-lime py-3.5 font-semibold text-bg transition active:scale-[0.98] disabled:opacity-60"
         >
           {saving ? 'Creando…' : 'Crear partido'}
         </button>

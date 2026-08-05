@@ -13,14 +13,12 @@ export default function ProfileSetup() {
   }
 
   return (
-    <div className="min-h-dvh bg-gradient-to-b from-electric/10 to-transparent px-6 py-10 dark:from-electric/20">
+    <div className="min-h-dvh bg-bg px-6 py-10">
       <div className="mx-auto max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <Logo size={48} className="mb-2" />
-          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Completa tu perfil</h1>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Así otros deportistas podrán encontrarte
-          </p>
+          <h1 className="text-2xl font-bold text-text">Completa tu perfil</h1>
+          <p className="mt-1 text-sm text-text-secondary">Así otros deportistas podrán encontrarte</p>
         </div>
         <ProfileForm onSaved={handleSaved} submitLabel="Empezar a jugar 🏆" />
       </div>

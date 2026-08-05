@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
 import { SPORT_EMOJI } from '../lib/constants'
-import AmbientBackground from '../components/AmbientBackground'
 
 export default function PartidoDetalle() {
   const { partidoId } = useParams()
@@ -84,18 +83,18 @@ export default function PartidoDetalle() {
 
   if (loading) {
     return (
-      <div className="flex h-dvh items-center justify-center">
-        <p className="font-semibold text-slate-400">Cargando…</p>
+      <div className="flex h-dvh items-center justify-center bg-bg">
+        <p className="font-semibold text-text-secondary">Cargando…</p>
       </div>
     )
   }
 
   if (!partido) {
     return (
-      <div className="flex h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
+      <div className="flex h-dvh flex-col items-center justify-center gap-3 bg-bg px-6 text-center">
         <p className="text-5xl">🔍</p>
-        <p className="font-semibold text-slate-500 dark:text-slate-400">Este partido ya no existe.</p>
-        <Link to="/partidos" className="font-semibold text-electric">
+        <p className="font-semibold text-text-secondary">Este partido ya no existe.</p>
+        <Link to="/partidos" className="font-semibold text-lime">
           Volver a partidos
         </Link>
       </div>
@@ -111,72 +110,70 @@ export default function PartidoDetalle() {
   })
 
   return (
-    <div className="relative min-h-dvh">
-      <AmbientBackground />
-      <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
-        <button onClick={() => navigate(-1)} className="text-2xl text-slate-500 dark:text-slate-400">
+    <div className="min-h-dvh bg-bg">
+      <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-bg px-4 py-3">
+        <button onClick={() => navigate(-1)} className="text-2xl text-text-secondary">
           ‹
         </button>
-        <p className="font-bold text-slate-900 dark:text-white">Detalle del partido</p>
+        <p className="font-semibold text-text">Detalle del partido</p>
       </header>
 
       <div className="px-6 py-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-electric/10 text-3xl">
+          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-surface-elevated text-3xl">
             {SPORT_EMOJI[partido.sports?.nombre] ?? '🏅'}
           </div>
           <div>
-            <h1 className="text-xl font-extrabold text-slate-900 dark:text-white">
-              {partido.titulo || partido.sports?.nombre}
-            </h1>
+            <h1 className="text-xl font-bold text-text">{partido.titulo || partido.sports?.nombre}</h1>
             {partido.estado === 'cancelado' && (
-              <span className="text-sm font-semibold text-red-500">Cancelado</span>
+              <span className="text-sm font-semibold text-burnt">Cancelado</span>
             )}
             {partido.estado === 'completo' && (
-              <span className="text-sm font-semibold text-energy-orange-dark">Completo</span>
+              <span className="text-sm font-semibold text-burnt">Completo</span>
             )}
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-2 rounded-2xl bg-white p-4 text-sm dark:bg-slate-900">
-          <p className="text-slate-700 dark:text-slate-200">📅 {fecha}</p>
-          <p className="text-slate-700 dark:text-slate-200">
+        <div className="mt-6 flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4 text-sm">
+          <p className="text-text">📅 {fecha}</p>
+          <p className="text-text">
             📍 {partido.lugar}, {partido.comuna}
           </p>
-          <p className="text-slate-700 dark:text-slate-200">🎯 Nivel: {partido.nivel}</p>
-          <p className="text-slate-700 dark:text-slate-200">
+          <p className="text-text">🎯 Nivel: {partido.nivel}</p>
+          <p className="text-text">
             🧍 {participantes.length}/{partido.cupos_totales} cupos
           </p>
         </div>
 
         <div className="mt-6">
-          <h2 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Jugadores anotados</h2>
+          <h2 className="mb-2 text-sm font-semibold text-text-secondary">Jugadores anotados</h2>
           <div className="flex flex-col gap-2">
             {participantes.map((p) => (
-              <div key={p.user_id} className="flex items-center gap-3 rounded-xl bg-white p-2 dark:bg-slate-900">
-                <div className="h-9 w-9 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div
+                key={p.user_id}
+                className="flex items-center gap-3 rounded-xl border border-border bg-surface p-2"
+              >
+                <div className="h-9 w-9 overflow-hidden rounded-lg bg-surface-elevated">
                   {p.profile?.foto_url ? (
                     <img src={p.profile.foto_url} alt="" className="h-full w-full object-cover" />
                   ) : (
                     <span className="flex h-full w-full items-center justify-center text-sm">🙂</span>
                   )}
                 </div>
-                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                  {p.profile?.nombre ?? 'Jugador'}
-                </p>
+                <p className="text-sm font-semibold text-text">{p.profile?.nombre ?? 'Jugador'}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {error && <p className="mt-4 text-sm font-medium text-red-500">{error}</p>}
+        {error && <p className="mt-4 text-sm font-medium text-burnt">{error}</p>}
 
         <div className="mt-6 flex flex-col gap-3">
           {yaMeUni ? (
             <>
               <Link
                 to={`/partidos/${partidoId}/chat`}
-                className="rounded-xl bg-electric py-3 text-center font-bold text-white shadow-lg shadow-electric/30 active:scale-[0.98]"
+                className="rounded-full bg-lime py-3 text-center font-semibold text-bg active:scale-[0.98]"
               >
                 💬 Chat del partido
               </Link>
@@ -184,7 +181,7 @@ export default function PartidoDetalle() {
                 <button
                   onClick={handleLeave}
                   disabled={working}
-                  className="rounded-xl border border-slate-200 py-3 font-bold text-slate-600 active:scale-[0.98] dark:border-slate-700 dark:text-slate-300"
+                  className="rounded-full border border-border py-3 font-semibold text-text active:scale-[0.98]"
                 >
                   Salir del partido
                 </button>
@@ -193,7 +190,7 @@ export default function PartidoDetalle() {
                 <button
                   onClick={handleCancel}
                   disabled={working}
-                  className="rounded-xl border border-red-200 py-3 font-bold text-red-500 active:scale-[0.98]"
+                  className="rounded-full border border-burnt py-3 font-semibold text-burnt active:scale-[0.98]"
                 >
                   Cancelar partido
                 </button>
@@ -205,7 +202,7 @@ export default function PartidoDetalle() {
               <button
                 onClick={handleJoin}
                 disabled={working}
-                className="rounded-xl bg-energy-green py-3 font-bold text-white shadow-lg shadow-energy-green/30 active:scale-[0.98] disabled:opacity-60"
+                className="rounded-full bg-lime py-3 font-semibold text-bg active:scale-[0.98] disabled:opacity-60"
               >
                 {working ? 'Uniendo…' : 'Unirme al partido'}
               </button>

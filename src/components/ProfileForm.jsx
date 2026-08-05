@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../context/AuthContext'
-import { DISPONIBILIDAD_OPTIONS, NIVELES, SPORT_EMOJI } from '../lib/constants'
+import { DISPONIBILIDAD_OPTIONS, SPORT_EMOJI } from '../lib/constants'
+import { LevelPicker } from './LevelBars'
 import AvatarUpload from './AvatarUpload'
 
 function toSportsMap(mySports) {
@@ -22,6 +23,7 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
   const [fotoUrl, setFotoUrl] = useState(initialProfile?.foto_url ?? '')
   const [disponibilidad, setDisponibilidad] = useState(initialProfile?.disponibilidad ?? [])
   const [selectedSports, setSelectedSports] = useState(toSportsMap(initialSports))
+  const [showAddSport, setShowAddSport] = useState(false)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
@@ -39,14 +41,15 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
     )
   }
 
-  function toggleSport(sportId) {
+  function addSport(sportId) {
+    setSelectedSports((prev) => ({ ...prev, [sportId]: 'Principiante' }))
+    setShowAddSport(false)
+  }
+
+  function removeSport(sportId) {
     setSelectedSports((prev) => {
       const next = { ...prev }
-      if (next[sportId]) {
-        delete next[sportId]
-      } else {
-        next[sportId] = 'Principiante'
-      }
+      delete next[sportId]
       return next
     })
   }
@@ -108,23 +111,26 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
     }
   }
 
+  const selectedIds = Object.keys(selectedSports).map(Number)
+  const availableToAdd = sportsCatalog.filter((s) => !selectedIds.includes(s.id))
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <AvatarUpload url={fotoUrl} onUploaded={setFotoUrl} />
 
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2">
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Nombre</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Nombre</label>
           <input
             required
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric focus:ring-2 focus:ring-electric/30 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
             placeholder="Tu nombre"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Edad</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Edad</label>
           <input
             type="number"
             min={13}
@@ -132,36 +138,36 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
             required
             value={edad}
             onChange={(e) => setEdad(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric focus:ring-2 focus:ring-electric/30 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none focus:border-lime"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Comuna / Ciudad</label>
+          <label className="mb-1 block text-sm font-semibold text-text-secondary">Comuna / Ciudad</label>
           <input
             required
             value={comuna}
             onChange={(e) => setComuna(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric focus:ring-2 focus:ring-electric/30 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
             placeholder="Ej: Providencia"
           />
         </div>
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-semibold text-slate-700 dark:text-slate-300">Biografía corta</label>
+        <label className="mb-1 block text-sm font-semibold text-text-secondary">Biografía corta</label>
         <textarea
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           maxLength={200}
           rows={3}
-          className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric focus:ring-2 focus:ring-electric/30 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+          className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none placeholder:text-text-secondary focus:border-lime"
           placeholder="Cuéntale a otros deportistas sobre ti…"
         />
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Disponibilidad</label>
-        <div className="flex flex-wrap gap-2">
+        <label className="mb-2 block text-sm font-semibold text-text-secondary">Disponibilidad</label>
+        <div className="grid grid-cols-2 gap-2">
           {DISPONIBILIDAD_OPTIONS.map((option) => {
             const active = disponibilidad.includes(option)
             return (
@@ -169,10 +175,8 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
                 key={option}
                 type="button"
                 onClick={() => toggleDisponibilidad(option)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                  active
-                    ? 'bg-electric text-white shadow-md shadow-electric/30'
-                    : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                className={`rounded-xl py-3 text-sm font-semibold transition ${
+                  active ? 'bg-lime text-bg' : 'border border-border bg-surface text-text'
                 }`}
               >
                 {option}
@@ -183,54 +187,69 @@ export default function ProfileForm({ initialProfile, initialSports = [], onSave
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
-          Deportes que practicas
-        </label>
+        <label className="mb-2 block text-sm font-semibold text-text-secondary">Tus deportes</label>
         <div className="flex flex-col gap-2">
-          {sportsCatalog.map((sport) => {
-            const active = Boolean(selectedSports[sport.id])
+          {Object.entries(selectedSports).map(([sportId, nivel]) => {
+            const sport = sportsCatalog.find((s) => s.id === Number(sportId))
+            if (!sport) return null
             return (
               <div
-                key={sport.id}
-                className={`flex items-center justify-between rounded-xl border px-4 py-3 transition ${
-                  active
-                    ? 'border-energy-orange bg-energy-orange/10'
-                    : 'border-slate-200 dark:border-slate-700'
-                }`}
+                key={sportId}
+                className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-3"
               >
-                <button
-                  type="button"
-                  onClick={() => toggleSport(sport.id)}
-                  className="flex items-center gap-2 text-left text-sm font-semibold text-slate-700 dark:text-slate-200"
-                >
+                <div className="flex items-center gap-2">
                   <span className="text-lg">{SPORT_EMOJI[sport.nombre] ?? '🏅'}</span>
-                  {sport.nombre}
-                </button>
-                {active && (
-                  <select
-                    value={selectedSports[sport.id]}
-                    onChange={(e) => setSportLevel(sport.id, e.target.value)}
-                    className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold dark:border-slate-600 dark:bg-slate-800 dark:text-white"
+                  <span className="text-sm font-semibold text-text">{sport.nombre}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <LevelPicker value={nivel} onChange={(n) => setSportLevel(sportId, n)} />
+                  <button
+                    type="button"
+                    onClick={() => removeSport(sportId)}
+                    aria-label={`Quitar ${sport.nombre}`}
+                    className="text-text-secondary"
                   >
-                    {NIVELES.map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
-                )}
+                    ✕
+                  </button>
+                </div>
               </div>
             )
           })}
         </div>
+
+        {showAddSport ? (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {availableToAdd.map((sport) => (
+              <button
+                key={sport.id}
+                type="button"
+                onClick={() => addSport(sport.id)}
+                className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-text"
+              >
+                {SPORT_EMOJI[sport.nombre] ?? '🏅'} {sport.nombre}
+              </button>
+            ))}
+            {availableToAdd.length === 0 && (
+              <p className="text-xs text-text-secondary">Ya agregaste todos los deportes disponibles.</p>
+            )}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setShowAddSport(true)}
+            className="mt-3 w-full rounded-xl border border-dashed border-border py-3 text-sm font-semibold text-text-secondary"
+          >
+            + Agregar deporte
+          </button>
+        )}
       </div>
 
-      {error && <p className="text-sm font-medium text-red-500">{error}</p>}
+      {error && <p className="text-sm font-medium text-burnt">{error}</p>}
 
       <button
         type="submit"
         disabled={saving}
-        className="rounded-xl bg-energy-green py-3 font-bold text-white shadow-lg shadow-energy-green/30 transition active:scale-[0.98] disabled:opacity-60"
+        className="rounded-full bg-lime py-3.5 font-semibold text-bg transition active:scale-[0.98] disabled:opacity-60"
       >
         {saving ? 'Guardando…' : submitLabel}
       </button>

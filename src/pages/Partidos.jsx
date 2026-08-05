@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../context/ProfileContext'
 import { SPORT_EMOJI } from '../lib/constants'
 import Logo from '../components/Logo'
-import { MatchListItemSkeleton } from '../components/Skeleton'
+import { ListItemSkeleton } from '../components/Skeleton'
 
 function formatFecha(iso) {
   return new Date(iso).toLocaleString('es-CL', {
@@ -94,44 +94,53 @@ export default function Partidos() {
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Logo size={28} />
-          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">Partidos</h1>
+          <h1 className="text-lg font-bold text-text">Partidos</h1>
         </div>
         <Link
           to="/partidos/nuevo"
-          className="rounded-full bg-energy-orange px-4 py-2 text-sm font-bold text-white shadow-md active:scale-95"
+          className="rounded-full bg-lime px-4 py-2 text-sm font-semibold text-bg active:scale-95"
         >
           + Crear
         </Link>
       </div>
 
-      <select
-        value={filterSportId}
-        onChange={(e) => setFilterSportId(e.target.value)}
-        className="mb-4 w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-      >
-        <option value="">Todos los deportes</option>
+      <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto pb-1">
+        <button
+          onClick={() => setFilterSportId('')}
+          className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+            filterSportId === '' ? 'bg-lime text-bg' : 'border border-border bg-surface text-text-secondary'
+          }`}
+        >
+          Todos los deportes
+        </button>
         {sportsCatalog.map((s) => (
-          <option key={s.id} value={s.id}>
-            {s.nombre}
-          </option>
+          <button
+            key={s.id}
+            onClick={() => setFilterSportId(String(s.id))}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+              filterSportId === String(s.id)
+                ? 'bg-lime text-bg'
+                : 'border border-border bg-surface text-text-secondary'
+            }`}
+          >
+            {SPORT_EMOJI[s.nombre] ?? '🏅'} {s.nombre}
+          </button>
         ))}
-      </select>
+      </div>
 
       {loading ? (
         <div className="flex flex-col gap-2">
-          <MatchListItemSkeleton />
-          <MatchListItemSkeleton />
-          <MatchListItemSkeleton />
+          <ListItemSkeleton />
+          <ListItemSkeleton />
+          <ListItemSkeleton />
         </div>
       ) : partidos.length === 0 ? (
         <div className="mt-16 text-center">
           <p className="text-5xl">🏟️</p>
-          <p className="mt-3 font-semibold text-slate-500 dark:text-slate-400">
-            No hay partidos abiertos por ahora
-          </p>
+          <p className="mt-3 font-semibold text-text-secondary">No hay partidos abiertos por ahora</p>
           <Link
             to="/partidos/nuevo"
-            className="mt-4 inline-block rounded-full bg-electric px-5 py-2 text-sm font-bold text-white"
+            className="mt-4 inline-block rounded-full bg-lime px-5 py-2 text-sm font-semibold text-bg"
           >
             Crear el primero
           </Link>
@@ -142,30 +151,26 @@ export default function Partidos() {
             <li key={p.id}>
               <Link
                 to={`/partidos/${p.id}`}
-                className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm transition active:scale-[0.99] dark:bg-slate-900"
+                className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 transition active:scale-[0.99]"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-electric/10 text-2xl">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-elevated text-2xl">
                   {SPORT_EMOJI[p.sports?.nombre] ?? '🏅'}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-bold text-slate-900 dark:text-white">
-                    {p.titulo || p.sports?.nombre}
-                  </p>
-                  <p className="truncate text-sm text-slate-500 dark:text-slate-400">
+                  <p className="truncate font-semibold text-text">{p.titulo || p.sports?.nombre}</p>
+                  <p className="truncate text-sm text-text-secondary">
                     {formatFecha(p.fecha_hora)} · 📍 {p.comuna}
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1">
                   <span
                     className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
-                      p.estado === 'completo'
-                        ? 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-400'
-                        : 'bg-energy-green/15 text-energy-green-dark'
+                      p.estado === 'completo' ? 'bg-surface-elevated text-text-secondary' : 'bg-lime text-bg'
                     }`}
                   >
                     {p.ocupados}/{p.cupos_totales}
                   </span>
-                  {p.yaMeUni && <span className="text-[11px] font-semibold text-electric">Anotado ✓</span>}
+                  {p.yaMeUni && <span className="text-[11px] font-semibold text-lime">Anotado ✓</span>}
                 </div>
               </Link>
             </li>
