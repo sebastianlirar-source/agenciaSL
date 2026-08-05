@@ -49,10 +49,11 @@
       <a href="#inicio" class="logo">agencia<span class="logo__accent">SL</span></a>
 
       <nav class="nav" id="nav">
-        <a href="#inicio" class="nav__link">Inicio</a>
         <a href="#servicios" class="nav__link">Servicios</a>
-        <a href="#nosotros" class="nav__link">Nosotros</a>
+        <a href="#proceso" class="nav__link">Proceso</a>
+        <a href="#casos" class="nav__link">Casos</a>
         <a href="#contacto" class="nav__link">Contacto</a>
+        <a href="#contacto" class="btn btn--primary btn--nav">Agenda una consultoría</a>
       </nav>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
@@ -69,7 +70,8 @@
         <div class="hero__inner">
           <p class="eyebrow fade-in">Marketing + Inteligencia Artificial</p>
           <h1 class="hero__title fade-in">
-            Impulsamos tu marca con <span class="text-gradient">marketing potenciado por IA</span>
+            Impulsa tu marca con<br />
+            <span class="text-gradient">marketing potenciado por IA</span>
           </h1>
           <p class="hero__subtitle fade-in">
             En agenciaSL combinamos estrategia, datos y automatización inteligente para que tu negocio
@@ -77,7 +79,7 @@
           </p>
           <div class="hero__actions fade-in">
             <a href="#contacto" class="btn btn--primary">Agenda una consultoría</a>
-            <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+            <a href="#servicios" class="btn btn--secondary">Ver servicios</a>
           </div>
         </div>
 
@@ -101,6 +103,24 @@
       </div>
     </section>
 
+    <!-- Stats -->
+    <section class="stats-band">
+      <div class="container stats-band__grid">
+        <div class="stat-lg fade-in">
+          <span class="stat-lg__number">2.8M+</span>
+          <span class="stat-lg__label">Eventos procesados</span>
+        </div>
+        <div class="stat-lg fade-in">
+          <span class="stat-lg__number">94%</span>
+          <span class="stat-lg__label">Retención de clientes</span>
+        </div>
+        <div class="stat-lg fade-in">
+          <span class="stat-lg__number">12 semanas</span>
+          <span class="stat-lg__label">Promedio a ROI positivo</span>
+        </div>
+      </div>
+    </section>
+
     <!-- Servicios -->
     <section class="servicios" id="servicios">
       <div class="container">
@@ -110,136 +130,85 @@
         <div class="cards">
           <article class="card fade-in">
             <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
             </div>
-            <h3 class="card__title">Estrategia de Marketing Digital</h3>
-            <p class="card__text">Planificamos campañas y funnels basados en datos para maximizar el retorno de tu inversión.</p>
-          </article>
-
-          <article class="card fade-in">
-            <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v3.5M17.5 21v.01M21 17.5h-3.5M14 17.5h.01"/></svg>
-            </div>
-            <h3 class="card__title">Automatización con IA</h3>
-            <p class="card__text">Flujos automatizados que responden, segmentan y nutren a tus leads sin intervención manual.</p>
-          </article>
-
-          <article class="card fade-in">
-            <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16M8 15v-4M12 15V8M16 15v-7"/></svg>
-            </div>
-            <h3 class="card__title">Análisis de Datos</h3>
-            <p class="card__text">Convertimos métricas en decisiones claras con dashboards e insights accionables en tiempo real.</p>
+            <h3 class="card__title">Segmentación de audiencia</h3>
+            <p class="card__text">Identificamos y agrupamos a tu audiencia ideal con modelos predictivos, para que cada campaña llegue a quien realmente convierte.</p>
           </article>
 
           <article class="card fade-in">
             <div class="card__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/></svg>
             </div>
-            <h3 class="card__title">Creación de Contenido con IA</h3>
-            <p class="card__text">Generamos copys, piezas visuales y video a escala, manteniendo la identidad de tu marca.</p>
+            <h3 class="card__title">Generación de contenido</h3>
+            <p class="card__text">Creamos copys, piezas visuales y video con IA a escala, manteniendo la voz y la identidad de tu marca en cada pieza.</p>
+          </article>
+
+          <article class="card fade-in">
+            <div class="card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h13"/><circle cx="17" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18" cy="18" r="1.6" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h3 class="card__title">Optimización de campañas</h3>
+            <p class="card__text">Ajustamos presupuestos, creatividades y segmentos en tiempo real según el rendimiento, para maximizar cada peso invertido.</p>
+          </article>
+
+          <article class="card fade-in">
+            <div class="card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16M8 15v-4M12 15V8M16 15v-7"/></svg>
+            </div>
+            <h3 class="card__title">Reporte y atribución</h3>
+            <p class="card__text">Dashboards claros que conectan cada resultado con la acción que lo generó, sin caja negra ni métricas de vanidad.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Nosotros -->
-    <section class="nosotros" id="nosotros">
-      <div class="container nosotros__grid">
-        <div class="fade-in nosotros__inner">
-          <p class="section-tag">Sobre nosotros</p>
-          <h2 class="section-title">Somos el punto de encuentro entre creatividad y tecnología</h2>
-          <p class="nosotros__text">
-            agenciaSL nace para ayudar a marcas a crecer combinando lo mejor del marketing tradicional
-            con el poder de la inteligencia artificial. Nuestro equipo de estrategas, analistas y
-            desarrolladores trabaja en conjunto para diseñar soluciones a medida que generan resultados
-            medibles, escalables y sostenibles en el tiempo.
-          </p>
-          <div class="stats">
-            <div class="stat">
-              <span class="stat__number">+120</span>
-              <span class="stat__label">Proyectos entregados</span>
-            </div>
-            <div class="stat">
-              <span class="stat__number">98%</span>
-              <span class="stat__label">Clientes satisfechos</span>
-            </div>
-            <div class="stat">
-              <span class="stat__number">24/7</span>
-              <span class="stat__label">Automatización activa</span>
-            </div>
+    <!-- Proceso -->
+    <section class="proceso" id="proceso">
+      <div class="container">
+        <p class="section-tag fade-in">Proceso</p>
+        <h2 class="section-title fade-in">Así implementamos, paso a paso</h2>
+
+        <div class="steps">
+          <div class="step fade-in">
+            <span class="step__number">01</span>
+            <h3 class="step__title">Diagnóstico de datos</h3>
+            <p class="step__text">Auditamos tus fuentes de datos, tracking y campañas actuales para entender qué está funcionando y dónde hay fricción.</p>
           </div>
-        </div>
-
-        <div class="nosotros__visual fade-in" aria-hidden="true">
-          <svg viewBox="0 0 320 320" class="orbit">
-            <circle cx="160" cy="160" r="150" class="orbit__ring orbit__ring--outer" />
-            <circle cx="160" cy="160" r="102" class="orbit__ring" />
-            <line x1="160" y1="160" x2="160" y2="34" class="orbit__spoke" />
-            <line x1="160" y1="160" x2="272" y2="222" class="orbit__spoke" />
-            <line x1="160" y1="160" x2="48" y2="222" class="orbit__spoke" />
-
-            <circle cx="160" cy="160" r="46" class="orbit__core" />
-            <text x="160" y="155" class="orbit__core-label">agencia</text>
-            <text x="160" y="173" class="orbit__core-label orbit__core-label--accent">SL</text>
-
-            <g class="orbit__node orbit__node--ia" transform="translate(160,34)">
-              <circle r="30" class="orbit__node-circle" />
-              <text class="orbit__node-label" y="4">IA</text>
-            </g>
-            <g class="orbit__node orbit__node--datos" transform="translate(272,222)">
-              <circle r="30" class="orbit__node-circle" />
-              <text class="orbit__node-label" y="4">Datos</text>
-            </g>
-            <g class="orbit__node orbit__node--estrategia" transform="translate(48,222)">
-              <circle r="30" class="orbit__node-circle" />
-              <text class="orbit__node-label" y="4">Estrategia</text>
-            </g>
-          </svg>
+          <div class="step fade-in">
+            <span class="step__number">02</span>
+            <h3 class="step__title">Sistemas en marcha</h3>
+            <p class="step__text">Implementamos automatización, segmentación y contenido con IA conectados a tu stack, listos para operar en semanas, no meses.</p>
+          </div>
+          <div class="step fade-in">
+            <span class="step__number">03</span>
+            <h3 class="step__title">Ajuste continuo</h3>
+            <p class="step__text">Monitoreamos resultados semana a semana y afinamos estrategia, creatividades y presupuesto según lo que dicen los datos.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Testimonios -->
-    <section class="testimonios" id="testimonios">
+    <!-- Casos / Logos de clientes -->
+    <section class="logos" id="casos">
       <div class="container">
-        <p class="section-tag fade-in">Resultados</p>
-        <h2 class="section-title fade-in">Marcas que ya confían en nosotros</h2>
-
-        <div class="testimonial-grid">
-          <blockquote class="testimonial fade-in">
-            <p class="testimonial__text">"Con agenciaSL triplicamos nuestros leads en tres meses gracias a la automatización con IA."</p>
-            <footer class="testimonial__author">
-              <span class="testimonial__avatar">CR</span>
-              <span class="testimonial__author-info">
-                <span class="testimonial__name">Camila Rojas</span>
-                <span class="testimonial__role">Directora de Marketing, Nortex</span>
-              </span>
-            </footer>
-          </blockquote>
-
-          <blockquote class="testimonial fade-in">
-            <p class="testimonial__text">"El análisis de datos que nos entregaron cambió por completo la forma en que tomamos decisiones."</p>
-            <footer class="testimonial__author">
-              <span class="testimonial__avatar">IP</span>
-              <span class="testimonial__author-info">
-                <span class="testimonial__name">Ignacio Pérez</span>
-                <span class="testimonial__role">CEO, Vantia</span>
-              </span>
-            </footer>
-          </blockquote>
-
-          <blockquote class="testimonial fade-in">
-            <p class="testimonial__text">"El contenido generado con IA mantuvo nuestra identidad de marca y nos ahorró semanas de trabajo."</p>
-            <footer class="testimonial__author">
-              <span class="testimonial__avatar">FS</span>
-              <span class="testimonial__author-info">
-                <span class="testimonial__name">Fernanda Soto</span>
-                <span class="testimonial__role">Fundadora, Loop Studio</span>
-              </span>
-            </footer>
-          </blockquote>
+        <p class="logos__label fade-in">Marcas que confían en nosotros</p>
+        <div class="logos__row fade-in">
+          <span class="logos__item">Nortex</span>
+          <span class="logos__item">Vantia</span>
+          <span class="logos__item">Loop Studio</span>
+          <span class="logos__item">Bruma Lab</span>
+          <span class="logos__item">Kiro</span>
         </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta-final">
+      <div class="container cta-final__inner fade-in">
+        <h2 class="cta-final__title">¿Listo para escalar tu marca con IA?</h2>
+        <p class="cta-final__text">Agenda una consultoría gratuita de 30 minutos y te mostramos cómo aplicar esto a tu negocio.</p>
+        <a href="#contacto" class="btn btn--primary">Agenda tu consultoría</a>
       </div>
     </section>
 
@@ -285,19 +254,6 @@
   <footer class="footer">
     <div class="container footer__inner">
       <a href="#inicio" class="logo logo--footer">agencia<span class="logo__accent">SL</span></a>
-
-      <div class="footer__socials">
-        <a href="#" class="social" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-        </a>
-        <a href="#" class="social" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 0 1 5 0V17"/></svg>
-        </a>
-        <a href="#" class="social" aria-label="X / Twitter">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4l16 16M20 4L4 20"/></svg>
-        </a>
-      </div>
-
       <p class="footer__copy">© <span id="year"></span> agenciaSL. Todos los derechos reservados.</p>
     </div>
   </footer>
