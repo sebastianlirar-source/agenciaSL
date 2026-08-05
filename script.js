@@ -255,10 +255,21 @@ document.addEventListener('DOMContentLoaded', () => {
     formNote.style.color = '';
     formNote.textContent = '';
 
+    const formData = new FormData(contactForm);
+    formData.set(
+      '_autoresponse',
+      `¡Hola${name ? ' ' + name : ''}! 👋\n\n` +
+      'Gracias por escribirnos a agenciaSL. Ya recibimos tu mensaje y nuestro equipo lo está revisando.\n\n' +
+      'En las próximas 24-48 horas te contactaremos para agendar tu consultoría gratuita y conversar sobre cómo la IA puede potenciar tu marca.\n\n' +
+      'Si quieres agregar algo más mientras tanto, puedes responder directamente a este correo.\n\n' +
+      '¡Nos vemos pronto! 🚀\n' +
+      'El equipo de agenciaSL'
+    );
+
     try {
       const response = await fetch(contactForm.action, {
         method: 'POST',
-        body: new FormData(contactForm),
+        body: formData,
         headers: { Accept: 'application/json' },
       });
 
