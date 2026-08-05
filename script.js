@@ -70,9 +70,9 @@ function initHeroCanvas() {
       radiusFactor: 0.3,
       angle: [0.4, 0.2],
       speed: [0.12, 0.18],
-      color: '79, 123, 255',
+      color: '0, 113, 227',
       lineWidth: 1.3,
-      glow: 12,
+      glow: 4,
     },
     {
       shape: buildPolyhedron(cubeVertices(), 1),
@@ -80,9 +80,9 @@ function initHeroCanvas() {
       radiusFactor: 0.115,
       angle: [0.9, 1.4],
       speed: [0.32, -0.24],
-      color: '155, 92, 255',
+      color: '142, 70, 255',
       lineWidth: 1.1,
-      glow: 9,
+      glow: 3,
     },
     {
       shape: buildPolyhedron(tetrahedronVertices(), 1),
@@ -90,9 +90,9 @@ function initHeroCanvas() {
       radiusFactor: 0.1,
       angle: [1.6, 0.3],
       speed: [-0.26, 0.34],
-      color: '61, 255, 192',
+      color: '6, 194, 112',
       lineWidth: 1.1,
-      glow: 9,
+      glow: 3,
     },
   ];
 
