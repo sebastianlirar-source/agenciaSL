@@ -264,7 +264,7 @@
   .testi{ background: var(--sage-deep); color: #f4f0e6; }
   .testi .eyebrow{ color: #cfd6bd; }
   .testi .eyebrow::before{ background:#cfd6bd; }
-  .testi-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap: 28px; margin-top: 44px;}
+  .testi-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 28px; margin-top: 44px;}
   @media (max-width:760px){ .testi-grid{ grid-template-columns:1fr; } }
   .testi-card{
     background: rgba(255,255,255,0.06);
@@ -583,6 +583,11 @@
         <div class="testi-card">
           <div class="stars">★★★★★ 5/5</div>
           <q>Gracias Caro, por todo el proceso, por tomarte el tiempo de guiarme y apoyarme en cada momento. Quedo feliz y agradecida porque se pudieron lograr los resultados esperados, excelente profesional.</q>
+          <footer>— Paciente postoperatorio</footer>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★ 5/5</div>
+          <q>La verdad en lo personal me sentí súper acompañada por ti, me encantó tu trabajo, sentí esa conexión que es súper importante en todo este proceso de rehabilitación. El ambiente igual es muy grato.</q>
           <footer>— Paciente postoperatorio</footer>
         </div>
       </div>
