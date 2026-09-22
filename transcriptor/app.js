@@ -283,10 +283,14 @@ async function transcribe(audioData) {
   setProgress(100, "Analizando el audio…");
   processingTitleEl.textContent = "Transcribiendo…";
 
+  // return_timestamps: true es la forma documentada/probada de usar
+  // chunk_length_s + stride_length_s en transformers.js: sin esto, el
+  // ensamblado de los fragmentos de 30s puede perder contenido en audios
+  // de más de 30 segundos.
   const output = await transcriber(audioData, {
     chunk_length_s: 30,
     stride_length_s: 5,
-    return_timestamps: false,
+    return_timestamps: true,
     task: "transcribe",
     language: language ?? undefined,
   });
