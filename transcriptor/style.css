@@ -146,6 +146,11 @@ body {
   text-align: center;
 }
 
+.hint--warning {
+  color: var(--danger);
+  font-weight: 600;
+}
+
 /* ---------- Procesando ---------- */
 
 .spinner {
@@ -189,6 +194,18 @@ body {
   color: var(--text-dim);
   margin: 0;
   text-align: center;
+}
+
+.processing-notice {
+  font-size: 0.85rem;
+  color: var(--danger);
+  margin: 0;
+  text-align: center;
+  max-width: 320px;
+}
+
+.processing-notice:empty {
+  display: none;
 }
 
 /* ---------- Resultado ---------- */

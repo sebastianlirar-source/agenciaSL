@@ -9,6 +9,12 @@ env.useBrowserCache = true;
 
 const MODEL_ID = "Xenova/whisper-small";
 
+// Grabaciones muy largas se acumulan enteras en memoria (MediaRecorder) y
+// luego se decodifican de una sola vez a un Float32Array (~230MB por hora),
+// así que ponemos un tope duro para no colgar el navegador, con aviso previo.
+const MAX_RECORDING_SECONDS = 3 * 60 * 60; // 3 horas
+const WARNING_THRESHOLD_SECONDS = 2 * 60 * 60; // aviso desde las 2 horas
+
 // ---------- Referencias del DOM ----------
 
 const stages = {
@@ -25,6 +31,7 @@ const hintEl = document.getElementById("hint");
 const progressFillEl = document.getElementById("progressFill");
 const processingTitleEl = document.getElementById("processingTitle");
 const processingDetailEl = document.getElementById("processingDetail");
+const processingNoticeEl = document.getElementById("processingNotice");
 
 const resultTextEl = document.getElementById("resultText");
 const copyBtn = document.getElementById("copyBtn");
@@ -45,6 +52,7 @@ let timerInterval = null;
 let recordingStartedAt = 0;
 
 let transcriberPromise = null; // se dispara al cargar la página para adelantar la descarga del modelo
+let autoStopNotice = null; // mensaje a mostrar si la grabación se cortó sola por el límite de duración
 
 function showStage(name) {
   for (const key of Object.keys(stages)) {
@@ -86,10 +94,26 @@ async function startRecording() {
   recordBtn.setAttribute("aria-label", "Toca para detener");
   hintEl.textContent = "Grabando… toca para detener";
 
+  autoStopNotice = null;
+  hintEl.classList.remove("hint--warning");
   recordingStartedAt = Date.now();
   timerEl.textContent = formatTime(0);
   timerInterval = setInterval(() => {
-    timerEl.textContent = formatTime((Date.now() - recordingStartedAt) / 1000);
+    const elapsedSeconds = (Date.now() - recordingStartedAt) / 1000;
+    timerEl.textContent = formatTime(elapsedSeconds);
+
+    if (elapsedSeconds >= MAX_RECORDING_SECONDS) {
+      autoStopNotice =
+        "La grabación se detuvo sola al llegar a las 3 horas (el límite máximo). Transcribiendo lo grabado hasta ahora…";
+      stopRecording();
+      return;
+    }
+
+    if (elapsedSeconds >= WARNING_THRESHOLD_SECONDS) {
+      const remainingMin = Math.ceil((MAX_RECORDING_SECONDS - elapsedSeconds) / 60);
+      hintEl.classList.add("hint--warning");
+      hintEl.textContent = `Quedan ${remainingMin} min antes del límite de 3 horas`;
+    }
   }, 250);
 }
 
@@ -107,6 +131,8 @@ async function onRecordingStopped() {
   showStage("processing");
   processingTitleEl.textContent = "Transcribiendo…";
   setProgress(0, "Preparando el audio…");
+  processingNoticeEl.textContent = autoStopNotice ?? "";
+  autoStopNotice = null;
 
   try {
     const audioData = await decodeToMono16k(blob);
@@ -281,9 +307,11 @@ recordBtn.addEventListener("click", () => {
 function resetToRecordStage() {
   showStage("record");
   hintEl.textContent = "Toca para grabar";
+  hintEl.classList.remove("hint--warning");
   timerEl.textContent = formatTime(0);
   recordBtn.classList.remove("is-recording");
   recordBtn.setAttribute("aria-label", "Toca para grabar");
+  processingNoticeEl.textContent = "";
 }
 
 retryBtn.addEventListener("click", resetToRecordStage);
