@@ -350,11 +350,13 @@
   .testi-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 28px; margin-top: 44px;}
   @media (max-width:760px){ .testi-grid{ grid-template-columns:1fr; } }
   .testi-card{
-    background: rgba(61,114,180,0.28);
-    border: 1px solid rgba(126,171,222,0.35);
+    background: rgba(92,150,220,0.4);
+    border: 1px solid rgba(146,191,242,0.5);
     padding: 28px 24px; border-radius: var(--radius);
   }
-  .testi-card .stars{ font-family: var(--font-mono); font-size: 12px; color: var(--clay); letter-spacing: 2px; margin-bottom: 12px; }
+  .testi-card:nth-child(2){ background: rgba(240,144,14,0.32); border-color: rgba(250,175,80,0.55); }
+  .testi-card:nth-child(3){ background: rgba(201,165,106,0.38); border-color: rgba(221,190,140,0.55); }
+  .testi-card .stars{ font-family: var(--font-mono); font-size: 12px; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
   .testi-card q{ font-family: var(--font-display); font-style: italic; font-size: 18px; line-height:1.45; display:block; }
   .testi-card footer{ margin-top:18px; font-family: var(--font-mono); font-size: 12px; color: #a9c2db; }
 
