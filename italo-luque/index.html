@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es-CL" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  ============================================================
+  ANTES DE PUBLICAR: reemplaza https://italoluque.vercel.app por
+  el dominio final en: canonical, og:url, og:image, JSON-LD,
+  robots.txt y sitemap.xml.
+  ============================================================
+-->
+<title>Personal Trainer a Domicilio en Ñuñoa | Ítalo Luque</title>
+<meta name="description" content="Personal trainer a domicilio en Ñuñoa y alrededores. Entrenamiento personalizado, adulto mayor y rehabilitación, funcional/TRX y nutrición (Diplomado UNAB). Sesión desde $17.500. Agenda por WhatsApp.">
+<link rel="canonical" href="https://italoluque.vercel.app/">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- Open Graph (vista previa al compartir por WhatsApp / redes) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="Ítalo Luque · Personal Trainer">
+<meta property="og:url" content="https://italoluque.vercel.app/">
+<meta property="og:title" content="Personal Trainer a Domicilio en Ñuñoa | Ítalo Luque">
+<meta property="og:description" content="Entrenamiento personalizado en tu casa: adultos mayores, rehabilitación, funcional/TRX y nutrición. Agenda por WhatsApp.">
+<meta property="og:image" content="https://italoluque.vercel.app/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ítalo Luque, personal trainer a domicilio en Ñuñoa">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind vía CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  if (window.tailwind) tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0A0A0A',
+          brand: '#FFD600',
+          coal: '#151515',
+          bone: '#F7F6F2'
+        },
+        fontFamily: {
+          display: ['"Bebas Neue"', 'Oswald', 'Impact', 'sans-serif'],
+          sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  /* Animación sutil de entrada (solo si hay JS y el usuario no pidió reducir movimiento) */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  /* Acordeón FAQ */
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .faq-icon { transform: rotate(45deg); }
+  /* Compensa el header fijo al navegar con anclas */
+  section[id] { scroll-margin-top: 72px; }
+</style>
+
+<!-- Datos estructurados para SEO local -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "@id": "https://italoluque.vercel.app/#negocio",
+  "name": "Ítalo Luque · Personal Trainer",
+  "description": "Entrenamiento personal a domicilio en Ñuñoa y alrededores: adultos mayores y rehabilitación, entrenamiento funcional/TRX y nutrición personalizada.",
+  "url": "https://italoluque.vercel.app/",
+  "image": "https://italoluque.vercel.app/img/og-image.jpg",
+  "telephone": "+56927298341",
+  "priceRange": "$17.500 - $25.000 CLP por persona/sesión",
+  "currenciesAccepted": "CLP",
+  "slogan": "Energía · Fuerza · Bienestar",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Ñuñoa",
+    "addressRegion": "Región Metropolitana",
+    "addressCountry": "CL"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Ñuñoa" },
+    { "@type": "City", "name": "Providencia" },
+    { "@type": "City", "name": "La Reina" },
+    { "@type": "City", "name": "Macul" },
+    { "@type": "City", "name": "Las Condes" },
+    { "@type": "City", "name": "Lo Barnechea (La Dehesa)" }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/personaltrainnerchile/"
+  ],
+  "founder": {
+    "@type": "Person",
+    "name": "Ítalo Luque",
+    "jobTitle": "Personal Trainer",
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Diplomado en Nutrición",
+      "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Universidad Andrés Bello (UNAB)" }
+    }
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Entrenamiento personal a domicilio",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Sesión individual a domicilio",
+        "price": "25000",
+        "priceCurrency": "CLP",
+        "itemOffered": { "@type": "Service", "name": "Entrenamiento personal individual a domicilio" }
+      },
+      {
+        "@type": "Offer",
+        "name": "Sesión para 2 personas a domicilio",
+        "price": "35000",
+        "priceCurrency": "CLP",
+        "itemOffered": { "@type": "Service", "name": "Entrenamiento personal para 2 personas a domicilio" }
+      }
+    ]
+  },
+  "knowsAbout": ["Entrenamiento personal", "Adulto mayor", "Rehabilitación", "Entrenamiento funcional", "TRX", "Nutrición"]
+}
+</script>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body class="bg-ink text-white font-sans antialiased">
+
+<!-- Íconos reutilizables -->
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+</svg>
+
+<a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand focus:text-ink focus:px-4 focus:py-2 focus:rounded">Saltar al contenido</a>
+
+<!-- ================= HEADER ================= -->
+<header id="top" class="fixed inset-x-0 top-0 z-50 bg-ink/90 backdrop-blur border-b border-white/10">
+  <div class="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="font-display text-2xl tracking-wide leading-none">ÍTALO <span class="text-brand">LUQUE</span></a>
+    <nav class="hidden lg:flex items-center gap-7 text-sm text-white/80" aria-label="Principal">
+      <a href="#servicios" class="hover:text-brand">Servicios</a>
+      <a href="#adultos-mayores" class="hover:text-brand">Adultos mayores</a>
+      <a href="#precios" class="hover:text-brand">Precios</a>
+      <a href="#sobre-mi" class="hover:text-brand">Sobre mí</a>
+      <a href="#zonas" class="hover:text-brand">Zonas</a>
+      <a href="#faq" class="hover:text-brand">Preguntas</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a data-wa href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 rounded-full bg-brand text-ink font-semibold text-sm px-4 py-2 hover:bg-white transition">
+        <svg class="w-4 h-4" aria-hidden="true"><use href="#i-wa"/></svg> Agenda
+      </a>
+      <button id="menu-btn" type="button" class="lg:hidden p-2 -mr-2 text-white" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav id="menu-movil" class="hidden lg:hidden border-t border-white/10 bg-ink" aria-label="Menú móvil">
+    <ul class="px-4 py-3 text-lg">
+      <li><a href="#servicios" class="block py-3 border-b border-white/5">Servicios</a></li>
+      <li><a href="#adultos-mayores" class="block py-3 border-b border-white/5">Adultos mayores y rehabilitación</a></li>
+      <li><a href="#precios" class="block py-3 border-b border-white/5">Precios</a></li>
+      <li><a href="#sobre-mi" class="block py-3 border-b border-white/5">Sobre mí</a></li>
+      <li><a href="#zonas" class="block py-3 border-b border-white/5">Zonas de atención</a></li>
+      <li><a href="#faq" class="block py-3">Preguntas frecuentes</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="contenido">
+
+<!-- ================= 1. HERO ================= -->
+<section class="relative overflow-hidden pt-24 pb-14 sm:pt-28 lg:pt-32 lg:pb-24">
+  <div aria-hidden="true" class="absolute -top-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-brand/10 blur-3xl"></div>
+  <div class="relative mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+    <div>
+      <p class="inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 text-brand text-xs sm:text-sm font-semibold px-3 py-1 mb-5">
+        <svg class="w-4 h-4" aria-hidden="true"><use href="#i-pin"/></svg> Ñuñoa · Providencia · La Reina · Macul · Las Condes
+      </p>
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-wide">
+        Entrenamiento personal <span class="text-brand">a domicilio</span> en Ñuñoa
+      </h1>
+      <p class="mt-4 font-display text-2xl sm:text-3xl tracking-[0.12em] text-white/90">Energía · Fuerza · Bienestar</p>
+      <p class="mt-4 text-lg text-white/75 max-w-xl">
+        Soy Ítalo Luque, personal trainer con Diplomado en Nutrición UNAB. Voy a tu casa con un plan hecho para ti, tengas 18 o 80 años.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a data-wa href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="inline-flex justify-center items-center gap-3 rounded-full bg-brand text-ink font-bold text-lg px-7 py-4 shadow-lg shadow-brand/20 hover:bg-white transition">
+          <svg class="w-6 h-6" aria-hidden="true"><use href="#i-wa"/></svg> Agenda por WhatsApp
+        </a>
+        <a href="#precios" class="inline-flex justify-center items-center rounded-full border border-white/25 font-semibold text-lg px-7 py-4 hover:border-brand hover:text-brand transition">Ver precios</a>
+      </div>
+      <p class="mt-4 text-sm text-white/60">Desde <strong class="text-white">$17.500</strong> por persona · Horarios flexibles</p>
+    </div>
+    <div class="relative mx-auto w-full max-w-md lg:max-w-none">
+      <div aria-hidden="true" class="absolute -inset-3 rounded-[2rem] border-2 border-brand/60 rotate-2"></div>
+      <img src="img/hero-italo.jpg" width="1200" height="1500" fetchpriority="high" decoding="async"
+           alt="Ítalo Luque, personal trainer, guiando un ejercicio a un alumno en su casa en Ñuñoa"
+           class="relative w-full aspect-[4/5] object-cover rounded-[1.75rem] bg-coal">
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2. BARRA DE CONFIANZA ================= -->
+<section aria-label="Por qué confiar" class="bg-brand text-ink">
+  <ul class="mx-auto max-w-6xl px-4 py-5 grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4 text-sm sm:text-base font-semibold">
+    <li class="flex items-center gap-3">
+      <svg class="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+      Diplomado Nutrición UNAB
+    </li>
+    <li class="flex items-center gap-3">
+      <svg class="w-7 h-7 shrink-0" aria-hidden="true"><use href="#i-ig"/></svg>
+      +12 mil seguidores
+    </li>
+    <li class="flex items-center gap-3">
+      <svg class="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M12 9v6M9 12h6"/></svg>
+      Club Médico Oasis
+    </li>
+    <li class="flex items-center gap-3">
+      <svg class="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.1a4 4 0 0 1 0 7.8M21 21v-2a4 4 0 0 0-3-3.9"/></svg>
+      Todas las edades
+    </li>
+  </ul>
+</section>
+
+<!-- ================= 3. SERVICIOS ================= -->
+<section id="servicios" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="max-w-2xl reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Servicios</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Un plan a tu medida, en tu casa</h2>
+      <p class="mt-4 text-white/70 text-lg">Sin traslados ni gimnasios llenos. Llego con lo necesario y adaptamos cada sesión a tu nivel, tu edad y tus objetivos.</p>
+    </div>
+
+    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Destacada -->
+      <a href="#adultos-mayores" class="reveal group sm:col-span-2 rounded-2xl bg-brand text-ink p-7 flex flex-col justify-between hover:-translate-y-1 transition">
+        <div>
+          <span class="inline-block rounded-full bg-ink text-brand text-xs font-bold uppercase tracking-wider px-3 py-1">Especialidad</span>
+          <svg class="mt-5 w-11 h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.2 12H8l1.5-3 3 6 1.5-3h6.8"/></svg>
+          <h3 class="mt-4 font-display text-3xl tracking-wide">Adultos mayores y rehabilitación</h3>
+          <p class="mt-2 text-ink/80 text-base max-w-lg">Movilidad, equilibrio y fuerza para mantener la independencia, prevenir caídas y recuperarse con seguridad después de una lesión.</p>
+        </div>
+        <span class="mt-5 font-semibold inline-flex items-center gap-1">Conocer más <span aria-hidden="true" class="group-hover:translate-x-1 transition">→</span></span>
+      </a>
+
+      <article class="reveal rounded-2xl bg-coal border border-white/10 p-7">
+        <svg class="w-11 h-11 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>
+        <h3 class="mt-4 font-display text-2xl tracking-wide">Entrenamiento personal a domicilio</h3>
+        <p class="mt-2 text-white/70">Sesiones 100% personalizadas en tu casa, condominio o plaza cercana. Tú eliges el lugar.</p>
+      </article>
+
+      <article class="reveal rounded-2xl bg-coal border border-white/10 p-7">
+        <svg class="w-11 h-11 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5c-1.5-1.8-4.5-2-6 0-2 2.6-1 8 1.5 11 1.4 1.7 3 1.6 4.5.8 1.5.8 3.1.9 4.5-.8 2.5-3 3.5-8.4 1.5-11-1.5-2-4.5-1.8-6 0Z"/><path d="M12 6.5c0-2 1-3.5 3-4"/></svg>
+        <h3 class="mt-4 font-display text-2xl tracking-wide">Nutrición personalizada</h3>
+        <p class="mt-2 text-white/70">Pautas de alimentación simples y realistas, respaldadas por mi Diplomado en Nutrición UNAB.</p>
+      </article>
+
+      <article class="reveal rounded-2xl bg-coal border border-white/10 p-7">
+        <svg class="w-11 h-11 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v6M16 2v6"/><path d="M8 8c0 4 2 5 4 6 2-1 4-2 4-6"/><path d="M12 14v4M9 22l3-4 3 4"/></svg>
+        <h3 class="mt-4 font-display text-2xl tracking-wide">Funcional / TRX</h3>
+        <p class="mt-2 text-white/70">Ejercicios con tu propio peso y suspensión TRX para ganar fuerza, resistencia y estabilidad.</p>
+      </article>
+
+      <article class="reveal rounded-2xl bg-coal border border-white/10 p-7">
+        <svg class="w-11 h-11 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3 class="mt-4 font-display text-2xl tracking-wide">Todas las edades, horarios flexibles</h3>
+        <p class="mt-2 text-white/70">Jóvenes, adultos y personas mayores. Coordinamos el horario que mejor te acomode.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. ADULTOS MAYORES Y REHABILITACIÓN ================= -->
+<section id="adultos-mayores" class="bg-bone text-ink py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <div class="reveal order-2 lg:order-1">
+        <img src="img/clase-adulto-mayor.jpg" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Ítalo acompañando a una persona mayor en un ejercicio de equilibrio en su hogar"
+             class="w-full aspect-[4/3] object-cover rounded-3xl shadow-xl">
+      </div>
+      <div class="reveal order-1 lg:order-2">
+        <p class="font-semibold uppercase tracking-widest text-sm text-ink/60">Mi especialidad</p>
+        <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Adultos mayores y rehabilitación</h2>
+        <p class="mt-4 text-lg sm:text-xl text-ink/80 leading-relaxed">
+          Entrenar después de los 60 no se trata de levantar mucho peso: se trata de <strong>moverse con confianza</strong>, mantener la independencia y disfrutar el día a día. Trabajo con paciencia, a un ritmo cómodo y siempre cuidando la seguridad.
+        </p>
+      </div>
+    </div>
+
+    <h3 class="sr-only">Beneficios</h3>
+    <ul class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <li class="reveal rounded-2xl bg-white p-6 shadow-sm border border-ink/5">
+        <span class="inline-flex w-12 h-12 items-center justify-center rounded-xl bg-brand"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>
+        <h4 class="mt-4 text-xl font-bold">Movilidad</h4>
+        <p class="mt-1 text-ink/70 text-base">Articulaciones más sueltas para vestirse, agacharse o subir escaleras con menos esfuerzo.</p>
+      </li>
+      <li class="reveal rounded-2xl bg-white p-6 shadow-sm border border-ink/5">
+        <span class="inline-flex w-12 h-12 items-center justify-center rounded-xl bg-brand"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 8h14M7 8l-3 6h6L7 8ZM17 8l-3 6h6l-3-6Z"/></svg></span>
+        <h4 class="mt-4 text-xl font-bold">Equilibrio</h4>
+        <p class="mt-1 text-ink/70 text-base">Ejercicios progresivos para pararse, caminar y girar con más estabilidad.</p>
+      </li>
+      <li class="reveal rounded-2xl bg-white p-6 shadow-sm border border-ink/5">
+        <span class="inline-flex w-12 h-12 items-center justify-center rounded-xl bg-brand"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h4 class="mt-4 text-xl font-bold">Prevención de caídas</h4>
+        <p class="mt-1 text-ink/70 text-base">Más fuerza en piernas y reflejos para reducir el riesgo de caídas en casa y en la calle.</p>
+      </li>
+      <li class="reveal rounded-2xl bg-white p-6 shadow-sm border border-ink/5">
+        <span class="inline-flex w-12 h-12 items-center justify-center rounded-xl bg-brand"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+        <h4 class="mt-4 text-xl font-bold">Recuperación</h4>
+        <p class="mt-1 text-ink/70 text-base">Vuelta gradual a la actividad después de una lesión, cirugía o un periodo de inactividad.</p>
+      </li>
+    </ul>
+
+    <!-- Mensaje para hijos/familiares -->
+    <div class="reveal mt-12 rounded-3xl bg-ink text-white p-7 sm:p-10 grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+      <div>
+        <h3 class="font-display text-3xl sm:text-4xl tracking-wide">¿Buscas un entrenador para tu papá o tu mamá?</h3>
+        <p class="mt-3 text-white/75 text-lg max-w-2xl">
+          Muchas familias me contactan porque quieren que sus padres se mantengan activos, pero con alguien de confianza. Voy a su casa, adapto cada ejercicio a su condición y te mantengo al tanto de cómo avanzan. Si tienen indicaciones de su médico o kinesiólogo, las respetamos.
+        </p>
+        <ul class="mt-4 grid sm:grid-cols-2 gap-2 text-white/85">
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Sin traslados: entrenan en su hogar</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Trato cercano y paciente</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Evaluación inicial antes de empezar</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Pueden entrenar juntos (plan 2 personas)</li>
+        </ul>
+      </div>
+      <a data-wa="Hola Ítalo, vi tu página y quiero información sobre entrenamiento para adulto mayor / rehabilitación" href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="inline-flex justify-center items-center gap-3 rounded-full bg-brand text-ink font-bold text-lg px-7 py-4 hover:bg-white transition">
+        <svg class="w-6 h-6" aria-hidden="true"><use href="#i-wa"/></svg> Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. CÓMO FUNCIONA ================= -->
+<section id="como-funciona" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Cómo funciona</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Empezar es simple</h2>
+    </div>
+    <ol class="mt-12 grid md:grid-cols-3 gap-6 md:gap-8">
+      <li class="reveal relative rounded-2xl bg-coal border border-white/10 p-7">
+        <span class="font-display text-6xl text-brand leading-none">01</span>
+        <h3 class="mt-3 font-display text-2xl tracking-wide">Escríbeme por WhatsApp</h3>
+        <p class="mt-2 text-white/70">Cuéntame qué buscas, tu comuna y qué horarios te acomodan.</p>
+      </li>
+      <li class="reveal relative rounded-2xl bg-coal border border-white/10 p-7">
+        <span class="font-display text-6xl text-brand leading-none">02</span>
+        <h3 class="mt-3 font-display text-2xl tracking-wide">Evaluación inicial</h3>
+        <p class="mt-2 text-white/70">Revisamos tu condición, historial de lesiones y objetivos para armar tu plan.</p>
+      </li>
+      <li class="reveal relative rounded-2xl bg-coal border border-white/10 p-7">
+        <span class="font-display text-6xl text-brand leading-none">03</span>
+        <h3 class="mt-3 font-display text-2xl tracking-wide">Entrenamos en tu casa</h3>
+        <p class="mt-2 text-white/70">Llego a tu domicilio y avanzamos sesión a sesión, a tu ritmo.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 6. PRECIOS ================= -->
+<section id="precios" class="py-16 sm:py-24 bg-coal">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Precios</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Valor por sesión a domicilio</h2>
+      <p class="mt-3 text-white/70">Valores por sesión. Tú eliges la frecuencia.</p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <article class="reveal rounded-3xl bg-ink border border-white/10 p-8 flex flex-col">
+        <h3 class="font-display text-3xl tracking-wide">Individual</h3>
+        <p class="mt-1 text-white/60">Atención 100% dedicada a ti.</p>
+        <p class="mt-6"><span class="font-display text-6xl tracking-wide">$25.000</span> <span class="text-white/60">/ sesión</span></p>
+        <ul class="mt-6 space-y-3 text-white/80 flex-1">
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Plan personalizado</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> En tu domicilio</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 text-brand shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Horario flexible</li>
+        </ul>
+        <a data-wa="Hola Ítalo, vi tu página y quiero agendar una sesión Individual ($25.000)" href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="mt-8 inline-flex justify-center items-center gap-3 rounded-full border-2 border-brand text-brand font-bold text-lg px-6 py-3.5 hover:bg-brand hover:text-ink transition">
+          <svg class="w-5 h-5" aria-hidden="true"><use href="#i-wa"/></svg> Agendar individual
+        </a>
+      </article>
+
+      <article class="reveal relative rounded-3xl bg-brand text-ink p-8 flex flex-col shadow-2xl shadow-brand/10">
+        <span class="absolute -top-3 right-6 rounded-full bg-ink text-brand text-xs font-bold uppercase tracking-wider px-3 py-1.5">Ahorra 30% c/u</span>
+        <h3 class="font-display text-3xl tracking-wide">2 personas</h3>
+        <p class="mt-1 text-ink/70">Con tu pareja, un amigo o un familiar.</p>
+        <p class="mt-6"><span class="font-display text-6xl tracking-wide">$35.000</span> <span class="text-ink/70">/ sesión</span></p>
+        <p class="mt-1 font-semibold">= $17.500 por persona <span class="font-normal text-ink/70">(ahorran $7.500 c/u)</span></p>
+        <ul class="mt-6 space-y-3 text-ink/85 flex-1">
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Plan adaptado a cada uno</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Más motivación entrenando en compañía</li>
+          <li class="flex gap-2"><svg class="w-5 h-5 mt-0.5 shrink-0" aria-hidden="true"><use href="#i-check"/></svg> Ideal para parejas de adultos mayores</li>
+        </ul>
+        <a data-wa="Hola Ítalo, vi tu página y quiero agendar una sesión para 2 personas ($35.000)" href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="mt-8 inline-flex justify-center items-center gap-3 rounded-full bg-ink text-brand font-bold text-lg px-6 py-3.5 hover:bg-white hover:text-ink transition">
+          <svg class="w-5 h-5" aria-hidden="true"><use href="#i-wa"/></svg> Agendar para 2
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. SOBRE MÍ ================= -->
+<section id="sobre-mi" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4 grid lg:grid-cols-[5fr_7fr] gap-10 lg:gap-16 items-center">
+    <div class="reveal mx-auto w-full max-w-sm lg:max-w-none">
+      <img src="img/sobre-mi-italo.jpg" width="900" height="1100" loading="lazy" decoding="async"
+           alt="Retrato de Ítalo Luque, personal trainer en Ñuñoa"
+           class="w-full aspect-[9/11] object-cover rounded-3xl">
+    </div>
+    <div class="reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Sobre mí</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Hola, soy Ítalo</h2>
+      <!-- TEXTO EDITABLE: reemplazar con la bio real de Ítalo -->
+      <div class="mt-5 space-y-4 text-lg text-white/80 leading-relaxed">
+        <p>Soy personal trainer y tengo un Diplomado en Nutrición de la Universidad Andrés Bello. Entreno a domicilio en Ñuñoa y comunas cercanas, y también atiendo en el Club Médico Oasis de La Dehesa.</p>
+        <p>Me gusta trabajar con personas de todas las edades, pero tengo un cariño especial por los adultos mayores: ver cómo recuperan seguridad y autonomía es lo que más me motiva.</p>
+        <p>Mi forma de entrenar es cercana y sin presión. Cada plan parte por escucharte y se ajusta a tu cuerpo, tu tiempo y tus metas.</p>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-2 text-sm">
+        <li class="rounded-full bg-white/5 border border-white/10 px-4 py-2">Diplomado Nutrición UNAB</li>
+        <li class="rounded-full bg-white/5 border border-white/10 px-4 py-2">Club Médico Oasis</li>
+        <li class="rounded-full bg-white/5 border border-white/10 px-4 py-2">Funcional / TRX</li>
+      </ul>
+      <a href="https://www.instagram.com/personaltrainnerchile/" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-brand font-semibold hover:underline">
+        <svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> Sígueme en @personaltrainnerchile
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. TESTIMONIOS ================= -->
+<!-- PLACEHOLDERS: reemplazar con reseñas reales (con permiso del alumno). No publicar con estos textos. -->
+<section id="testimonios" class="py-16 sm:py-24 bg-coal">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Testimonios</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Lo que dicen mis alumnos</h2>
+    </div>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <figure class="reveal rounded-2xl bg-ink border border-dashed border-brand/50 p-7 flex flex-col">
+        <span aria-hidden="true" class="font-display text-6xl text-brand leading-none">“</span>
+        <blockquote class="mt-2 text-white/80 flex-1">[Testimonio real de alumno #1 — idealmente un adulto mayor o su familiar]</blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-white/10 text-sm">
+          <span class="block font-semibold">[Nombre del alumno]</span>
+          <span class="text-white/60">[Comuna · tipo de entrenamiento]</span>
+        </figcaption>
+      </figure>
+      <figure class="reveal rounded-2xl bg-ink border border-dashed border-brand/50 p-7 flex flex-col">
+        <span aria-hidden="true" class="font-display text-6xl text-brand leading-none">“</span>
+        <blockquote class="mt-2 text-white/80 flex-1">[Testimonio real de alumno #2 — idealmente sobre rehabilitación o recuperación]</blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-white/10 text-sm">
+          <span class="block font-semibold">[Nombre del alumno]</span>
+          <span class="text-white/60">[Comuna · tipo de entrenamiento]</span>
+        </figcaption>
+      </figure>
+      <figure class="reveal rounded-2xl bg-ink border border-dashed border-brand/50 p-7 flex flex-col">
+        <span aria-hidden="true" class="font-display text-6xl text-brand leading-none">“</span>
+        <blockquote class="mt-2 text-white/80 flex-1">[Testimonio real de alumno #3 — idealmente sobre funcional/TRX o nutrición]</blockquote>
+        <figcaption class="mt-5 pt-4 border-t border-white/10 text-sm">
+          <span class="block font-semibold">[Nombre del alumno]</span>
+          <span class="text-white/60">[Comuna · tipo de entrenamiento]</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. GALERÍA ================= -->
+<section id="galeria" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 reveal">
+      <div>
+        <p class="text-brand font-semibold uppercase tracking-widest text-sm">Galería</p>
+        <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Así entrenamos</h2>
+      </div>
+      <a href="https://www.instagram.com/personaltrainnerchile/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-brand font-semibold hover:underline">
+        <svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> Ver más en Instagram
+      </a>
+    </div>
+    <ul class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+      <li class="reveal"><img src="img/galeria-trx-funcional.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Alumno entrenando con bandas de suspensión TRX" class="w-full aspect-square object-cover rounded-2xl"></li>
+      <li class="reveal"><img src="img/galeria-adulto-mayor-equilibrio.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Persona mayor realizando un ejercicio de equilibrio guiado por Ítalo" class="w-full aspect-square object-cover rounded-2xl"></li>
+      <li class="reveal"><img src="img/galeria-entrenamiento-domicilio.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Sesión de entrenamiento personal en el living de un alumno" class="w-full aspect-square object-cover rounded-2xl"></li>
+      <li class="reveal"><img src="img/galeria-clase-dos-personas.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Dos personas entrenando juntas en una clase a domicilio" class="w-full aspect-square object-cover rounded-2xl"></li>
+      <li class="reveal"><img src="img/galeria-movilidad-rehabilitacion.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Ejercicio de movilidad articular como parte de una rehabilitación" class="w-full aspect-square object-cover rounded-2xl"></li>
+      <li class="reveal"><img src="img/galeria-club-oasis.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Ítalo entrenando a un alumno en el Club Médico Oasis, La Dehesa" class="w-full aspect-square object-cover rounded-2xl"></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 10. ZONAS DE ATENCIÓN ================= -->
+<section id="zonas" class="py-16 sm:py-24 bg-coal">
+  <div class="mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-10 items-center">
+    <div class="reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Zonas de atención</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">Voy a tu casa</h2>
+      <p class="mt-4 text-white/70 text-lg">Atiendo a domicilio en el sector oriente de Santiago:</p>
+      <ul class="mt-6 flex flex-wrap gap-3">
+        <li class="inline-flex items-center gap-2 rounded-full bg-brand text-ink font-semibold px-4 py-2"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-pin"/></svg> Ñuñoa</li>
+        <li class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2"><svg class="w-4 h-4 text-brand" aria-hidden="true"><use href="#i-pin"/></svg> Providencia</li>
+        <li class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2"><svg class="w-4 h-4 text-brand" aria-hidden="true"><use href="#i-pin"/></svg> La Reina</li>
+        <li class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2"><svg class="w-4 h-4 text-brand" aria-hidden="true"><use href="#i-pin"/></svg> Macul</li>
+        <li class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2"><svg class="w-4 h-4 text-brand" aria-hidden="true"><use href="#i-pin"/></svg> Las Condes</li>
+      </ul>
+      <div class="mt-8 rounded-2xl bg-ink border border-white/10 p-6">
+        <h3 class="font-display text-2xl tracking-wide">También en Club Médico Oasis</h3>
+        <p class="mt-1 text-white/70">La Dehesa, Lo Barnechea. Consulta disponibilidad de horarios.</p>
+        <a href="https://www.instagram.com/oasis_fitnessclub/" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-brand font-semibold hover:underline">
+          <svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> @oasis_fitnessclub
+        </a>
+      </div>
+      <p class="mt-6 text-white/60 text-sm">¿Vives en otra comuna? Escríbeme y lo vemos.</p>
+    </div>
+    <div class="reveal">
+      <iframe title="Mapa de la zona de atención: Ñuñoa, Santiago"
+              src="https://www.google.com/maps?q=%C3%91u%C3%B1oa%2C+Santiago%2C+Chile&z=12&output=embed"
+              width="600" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              class="w-full h-80 sm:h-[26rem] rounded-3xl border-0 grayscale-[30%]" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11. PREGUNTAS FRECUENTES ================= -->
+<!-- RESPUESTAS EDITABLES: confirmar con Ítalo antes de publicar -->
+<section id="faq" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-3xl px-4">
+    <div class="text-center reveal">
+      <p class="text-brand font-semibold uppercase tracking-widest text-sm">Preguntas frecuentes</p>
+      <h2 class="mt-2 font-display text-4xl sm:text-5xl tracking-wide">¿Tienes dudas?</h2>
+    </div>
+    <div class="mt-10 space-y-3" id="faq-list">
+      <details class="reveal group rounded-2xl bg-coal border border-white/10 open:border-brand/50">
+        <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 text-lg font-semibold">
+          <h3>¿Necesito tener equipamiento?</h3>
+          <span class="faq-icon shrink-0 w-8 h-8 inline-flex items-center justify-center rounded-full bg-brand text-ink text-2xl leading-none transition" aria-hidden="true">+</span>
+        </summary>
+        <p class="px-5 sm:px-6 pb-6 -mt-1 text-white/75">[Respuesta editable: indicar qué implementos lleva Ítalo y si el alumno necesita algo (ej. colchoneta, espacio libre).]</p>
+      </details>
+      <details class="reveal group rounded-2xl bg-coal border border-white/10 open:border-brand/50">
+        <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 text-lg font-semibold">
+          <h3>¿Atiendes a personas con lesiones?</h3>
+          <span class="faq-icon shrink-0 w-8 h-8 inline-flex items-center justify-center rounded-full bg-brand text-ink text-2xl leading-none transition" aria-hidden="true">+</span>
+        </summary>
+        <p class="px-5 sm:px-6 pb-6 -mt-1 text-white/75">[Respuesta editable: explicar cómo se trabaja con lesiones, si se pide indicación médica/kinesiológica y qué casos atiende.]</p>
+      </details>
+      <details class="reveal group rounded-2xl bg-coal border border-white/10 open:border-brand/50">
+        <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 text-lg font-semibold">
+          <h3>¿Cuánto dura la sesión?</h3>
+          <span class="faq-icon shrink-0 w-8 h-8 inline-flex items-center justify-center rounded-full bg-brand text-ink text-2xl leading-none transition" aria-hidden="true">+</span>
+        </summary>
+        <p class="px-5 sm:px-6 pb-6 -mt-1 text-white/75">[Respuesta editable: duración de la sesión en minutos y frecuencia semanal recomendada.]</p>
+      </details>
+      <details class="reveal group rounded-2xl bg-coal border border-white/10 open:border-brand/50">
+        <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 text-lg font-semibold">
+          <h3>¿Cómo se paga?</h3>
+          <span class="faq-icon shrink-0 w-8 h-8 inline-flex items-center justify-center rounded-full bg-brand text-ink text-2xl leading-none transition" aria-hidden="true">+</span>
+        </summary>
+        <p class="px-5 sm:px-6 pb-6 -mt-1 text-white/75">[Respuesta editable: medios de pago (transferencia, efectivo, etc.) y si se paga por sesión o por paquete.]</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12. CTA FINAL ================= -->
+<section class="px-4 pb-16 sm:pb-24">
+  <div class="reveal mx-auto max-w-6xl rounded-3xl bg-brand text-ink px-6 py-12 sm:px-12 sm:py-16 text-center">
+    <h2 class="font-display text-4xl sm:text-6xl tracking-wide leading-none">Tu primera sesión está a un mensaje</h2>
+    <p class="mt-4 text-lg sm:text-xl text-ink/80 max-w-2xl mx-auto">Escríbeme, cuéntame qué necesitas y coordinamos tu evaluación inicial.</p>
+    <a data-wa href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="mt-8 inline-flex justify-center items-center gap-3 rounded-full bg-ink text-white font-bold text-lg px-8 py-4 hover:bg-coal transition">
+      <svg class="w-6 h-6 text-brand" aria-hidden="true"><use href="#i-wa"/></svg> Agenda por WhatsApp
+    </a>
+    <p class="mt-4 font-semibold">+56 9 2729 8341</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-white/10 pb-28 sm:pb-12">
+  <div class="mx-auto max-w-6xl px-4 pt-12 grid gap-10 md:grid-cols-3">
+    <div>
+      <p class="font-display text-3xl tracking-wide">ÍTALO <span class="text-brand">LUQUE</span></p>
+      <p class="text-white/60">Personal Trainer · Energía · Fuerza · Bienestar</p>
+      <p class="mt-3 text-white/60 text-sm">Entrenamiento a domicilio en Ñuñoa, Providencia, La Reina, Macul y Las Condes. Club Médico Oasis, La Dehesa.</p>
+    </div>
+    <div>
+      <h2 class="font-display text-xl tracking-widest text-brand">Contacto</h2>
+      <ul class="mt-3 space-y-3">
+        <li><a data-wa href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener" class="inline-flex items-center gap-3 hover:text-brand"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-wa"/></svg> +56 9 2729 8341</a></li>
+        <li><a href="https://www.instagram.com/personaltrainnerchile/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 hover:text-brand"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> @personaltrainnerchile</a></li>
+        <!-- TODO: reemplazar href="#" por la URL real de Facebook de Ítalo -->
+        <li><a href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-3 hover:text-brand"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-fb"/></svg> Facebook</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-display text-xl tracking-widest text-brand">También en</h2>
+      <ul class="mt-3 space-y-3">
+        <li><a href="https://www.instagram.com/oasis_fitnessclub/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 hover:text-brand"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> @oasis_fitnessclub</a></li>
+        <li><a href="https://www.instagram.com/nunoatrxyfuncional/" target="_blank" rel="noopener" class="inline-flex items-center gap-3 hover:text-brand"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-ig"/></svg> @nunoatrxyfuncional</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="mx-auto max-w-6xl px-4 mt-10 pt-6 border-t border-white/10 text-sm text-white/50">© <span id="year">2026</span> Ítalo Luque · Personal Trainer. Todos los derechos reservados.</p>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a data-wa href="https://wa.me/56927298341?text=Hola%20%C3%8Dtalo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n%20sobre%20el%20entrenamiento%20a%20domicilio" target="_blank" rel="noopener"
+   aria-label="Escríbeme por WhatsApp"
+   class="fixed z-50 right-4 bottom-4 sm:right-6 sm:bottom-6 w-16 h-16 inline-flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl shadow-black/40 ring-4 ring-ink/40 hover:scale-105 transition"
+   style="margin-bottom: env(safe-area-inset-bottom);">
+  <svg class="w-9 h-9" aria-hidden="true"><use href="#i-wa"/></svg>
+</a>
+
+<script src="main.js" defer></script>
+</body>
+</html>
