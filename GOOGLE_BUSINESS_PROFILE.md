@@ -3,10 +3,11 @@
 Contenido listo para copiar y pegar en [business.google.com](https://business.google.com). Datos base (NAP) — deben quedar **idénticos** a los del sitio:
 
 - **Nombre:** Carolina Lui Escuti — Kine Dermatofuncional e Integrativa
-- **Dirección:** Callao 2970, Las Condes, Santiago, Chile
+- **Dirección:** Callao 2970, Oficina 614, Las Condes, Santiago, Chile (metro Tobalaba)
 - **Teléfono:** +56 9 7518 4249
 - **Sitio web:** https://kinecarolui.cl
 - **Horario:** Lunes a viernes 10:00–19:00 · Sábado 10:00–13:00
+- **Cuenta Google para administrar el perfil:** kinecarolui@gmail.com
 
 ---
 
@@ -102,7 +103,7 @@ Publícalas tú misma desde tu cuenta apenas verifiques el perfil — así evita
    Corporal: $40.000 (60 min), pack 10 sesiones $360.000. Papada: $35.000 (40 min), pack 8 sesiones $240.000. Abdominoplastia (PAD): pack 10 sesiones $320.000 (45 min).
 
 2. **¿Dónde atiendes?**
-   En mi consulta en Las Condes, Callao 2970, entre metro Tobalaba y metro El Golf. Solo atiendo con hora previamente agendada.
+   En mi consulta en Las Condes, Callao 2970, Oficina 614, cerca de metro Tobalaba. Solo atiendo con hora previamente agendada.
 
 3. **¿Las sesiones son reembolsables por Isapre?**
    Sí, con orden médica y mi boleta puedes reembolsar en Isapre y seguros complementarios.
@@ -188,15 +189,15 @@ Aquí está el link, toma solo 1 minuto: [LINK_RESEÑA]
 
 ## 11. Guía paso a paso para crear y verificar el perfil
 
-1. **Antes de empezar — revisa si el edificio ya tiene ficha en Maps.** Callao 2970 parece ser un edificio de oficinas/consultas (edificio comercial compartido, no una casa individual). Busca "Callao 2970, Las Condes" en Google Maps: si aparece una ficha genérica del edificio, de otro profesional, o de un centro médico que comparte la dirección, es importante que tu dirección incluya el número de oficina/consulta exacto (ej. "Callao 2970, Of. 503, Las Condes") para que Google no la confunda con esa otra ficha ni la rechace por duplicado.
+1. **Antes de empezar — revisa si el edificio ya tiene ficha en Maps.** Confirmado: Callao 2970 es un edificio de oficinas compartido y la consulta es la **Oficina 614**. Busca "Callao 2970, Las Condes" en Google Maps antes de crear el perfil: si aparece una ficha genérica del edificio o de otro profesional en el mismo edificio, no la edites ni la reclames — crea el perfil nuevo igual, pero asegúrate de que la dirección quede con "Of. 614" incluido (ver punto 5) para que Google no la confunda ni la marque como duplicada.
 
-2. Entra a [business.google.com](https://business.google.com) con la cuenta de Google que vas a usar para administrar el negocio (idealmente una cuenta dedicada al negocio, no la personal).
+2. Entra a [business.google.com](https://business.google.com) con la cuenta **kinecarolui@gmail.com** (ya está creada, es la que va a administrar el negocio).
 
 3. Clic en "Administrar ahora" → ingresa el nombre exacto del punto 1.
 
 4. Categoría: selecciona la principal del punto 2, luego "¿Tienes una ubicación física?" → **Sí**.
 
-5. Dirección: Callao 2970 (+ número de oficina si aplica), Las Condes, Región Metropolitana, Chile.
+5. Dirección: **Callao 2970, Oficina 614, Las Condes, Región Metropolitana, Chile.** Si el campo de dirección de Google no tiene un campo separado para "número de oficina/suite", agrégalo en el campo de línea 2 de la dirección (Google lo pide como "Unit/Suite" o "Depto./Oficina" según el formulario).
 
 6. "¿Ofreces entregas o visitas a domicilio?" → No, salvo que corresponda.
 
@@ -206,9 +207,9 @@ Aquí está el link, toma solo 1 minuto: [LINK_RESEÑA]
 
 9. **Verificación.** Google ofrece distintos métodos según el negocio (video, código postal, llamada, email); para negocios de servicios con atención en consulta suele ofrecer **verificación por video**. Si te la ofrecen, graba mostrando en este orden:
    - La entrada del edificio con el número **2970** claramente visible en la toma.
-   - El letrero o señalética de tu consulta/oficina, si existe.
+   - El recorrido hasta el piso/oficina — pasillo, ascensor o escalera, hasta llegar a la puerta de la **Oficina 614**, mostrando el número de la puerta si tiene placa.
    - El interior de tu sala/box de atención.
-   - Algún documento que confirme el negocio en esa dirección: una boleta reciente, un contrato de arriendo, o correspondencia a tu nombre o al nombre del centro, con la dirección visible.
+   - Algún documento que confirme el negocio en esa dirección: una boleta reciente, un contrato de arriendo, o correspondencia a tu nombre o al nombre del centro, con la dirección "Callao 2970, Of. 614" visible.
    Habla mientras grabas, indicando tu nombre y que esa es tu consulta — los videos narrados tienen menos rechazo que los silenciosos.
 
 10. Si Google te ofrece verificación por correo postal en vez de video, acepta: llega una carta con un código PIN en 5–14 días, que ingresas en el panel.
