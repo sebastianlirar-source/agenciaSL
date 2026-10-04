@@ -261,29 +261,25 @@
     transition: background .2s ease, transform .2s ease;
   }
   .nav-cta:hover{ background: var(--ink); transform: translateY(-1px); }
-  .nav-toggle{
-    display:none; flex-direction:column; gap:5px;
-    background:none; border:none; cursor:pointer; padding:6px;
-  }
-  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--ink); }
-  .nav-mobile{
-    display:none; flex-direction:column;
-    position:absolute; top:100%; left:0; right:0;
-    background: var(--bg-panel); border-bottom:1px solid var(--line);
-    padding: 4px 28px 12px;
-  }
-  .nav-mobile.open{ display:flex; }
-  .nav-mobile a{
-    padding:14px 0; font-size:15.5px; color:var(--ink-soft); text-decoration:none;
-    border-bottom:1px dashed var(--line);
-  }
-  .nav-mobile a:last-child{ border-bottom:none; }
+  .nav-mobile{ display:none; }
   @media (max-width: 760px){
     .nav-links{ display:none; }
-    .nav-toggle{ display:flex; }
-    .nav{ padding-left:20px; padding-right:20px; gap:10px; }
+    .nav{ padding-left:20px; padding-right:20px; gap:10px; flex-wrap:wrap; }
     .brand{ font-size:16.5px; }
     .nav-cta{ padding:9px 12px; font-size:12px; }
+    .nav-mobile{
+      display:flex; flex-wrap:wrap; gap:8px;
+      width:100%; order:3;
+      padding: 12px 0 14px;
+    }
+    .nav-mobile a{
+      padding:8px 15px; font-size:13px; font-weight:600; text-decoration:none;
+      border-radius:999px; color:#fbf9f5; white-space:nowrap;
+    }
+    .nav-mobile a:nth-child(1){ background: var(--sage); }
+    .nav-mobile a:nth-child(2){ background: var(--clay-deep); }
+    .nav-mobile a:nth-child(3){ background: var(--gold); color: var(--ink); }
+    .nav-mobile a:nth-child(4){ background: var(--sage-deep); }
   }
 
   /* ============ HERO ============ */
@@ -574,9 +570,6 @@
       <a href="#ubicacion">Ubicación</a>
     </div>
     <a class="nav-cta" href="https://wa.me/56975184249?text=Hola%20Carolina%2C%20me%20gustar%C3%ADa%20agendar%20una%20hora" target="_blank" rel="noopener">Agendar hora →</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
     <div class="nav-mobile" id="navMobile">
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#servicios">Servicios</a>
@@ -952,19 +945,6 @@
 </a>
 
 <script>
-  const navToggle = document.getElementById('navToggle');
-  const navMobile = document.getElementById('navMobile');
-  navToggle.addEventListener('click', ()=>{
-    const open = navMobile.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  navMobile.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('click', ()=>{
-      navMobile.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-
   const fc = document.getElementById('floatCta');
   window.addEventListener('scroll', ()=>{
     if(window.scrollY > 560){ fc.classList.add('show'); } else { fc.classList.remove('show'); }
