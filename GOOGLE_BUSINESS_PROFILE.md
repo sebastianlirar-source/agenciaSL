@@ -164,7 +164,7 @@ Envíalo 2–3 días después de terminar un tratamiento o pack de sesiones, cua
 ```
 Hola [NOMBRE] 💛 Qué alegría haber sido parte de tu proceso de recuperación. Si tienes un minuto, me ayudaría muchísimo que dejaras una reseña en Google contando tu experiencia — así otras personas que están buscando ayuda como la tuya pueden encontrarme más fácil.
 
-Aquí está el link, toma solo 1 minuto: [LINK_RESEÑA]
+Aquí está el link, toma solo 1 minuto: https://g.page/r/CXpYdR3XJ9MREBM/review
 
 ¡Gracias de corazón por tu confianza!
 — Caro
@@ -220,7 +220,7 @@ Aquí está el link, toma solo 1 minuto: [LINK_RESEÑA]
 
 ## 12. Checklist para después de verificar
 
-- [ ] Reemplazar `REVIEW_URL` en el sitio: buscar el comentario `<!-- REVIEW_URL: ... -->` en `index.html` (sección de testimonios) y cambiar el `href="#"` del botón "Déjame tu reseña en Google" por el link real de reseñas (Perfil → "Pedir reseñas" → copiar link corto).
+- [x] Reemplazar `REVIEW_URL` en el sitio — ya está puesto: https://g.page/r/CXpYdR3XJ9MREBM/review
 - [ ] Conectar **Google Search Console**: pegar el código de verificación en el `<meta name="google-site-verification">` que está comentado en el `<head>` de `index.html`, descomentarlo, y volver a publicar.
 - [ ] Publicar las 7 fotos/semanas 1–4 de novedades ya redactadas en este documento.
 - [ ] Pedir las primeras 10 reseñas a pacientes recientes usando la plantilla de WhatsApp (punto 9) — es la señal más fuerte para que el perfil empiece a posicionar en el "paquete local" (3-pack) de Google Maps.
