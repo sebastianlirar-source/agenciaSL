@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/resena",
+      "destination": "https://g.page/r/CXpYdR3XJ9MREBM/review",
+      "permanent": false
+    },
+    {
+      "source": "/reseña",
+      "destination": "https://g.page/r/CXpYdR3XJ9MREBM/review",
+      "permanent": false
+    }
+  ]
+}
